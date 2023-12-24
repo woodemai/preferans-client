@@ -1,5 +1,5 @@
 import { IUser } from "@/entities/user"
-import { PayloadAction, createSlice } from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit"
 import { authApi } from "../services/AuthService"
 
 type AuthState = {

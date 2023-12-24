@@ -1,5 +1,4 @@
 import CreateGameButton from "@/features/CreateGameButton";
-import { Button } from "@/shared/components/ui/button";
 import GameList from "@/widgets/GameList";
 
 export default function HomePage() {
