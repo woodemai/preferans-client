@@ -1,4 +1,4 @@
-import { store } from "@/shared/store/store"
+import store from "@/shared/store"
 import { ReactNode } from "react"
 import { Provider } from "react-redux"
 
