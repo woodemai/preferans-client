@@ -1,15 +1,17 @@
 import { FC } from 'react'
 import { AuthFormState } from './AuthFormState'
 import { Button } from '@/shared/components/ui/button'
+import Spinner from '@/shared/components/ui/spinner'
 
 type Props = {
-    formState: AuthFormState
+    formState: AuthFormState,
+    isLoading?: boolean
 }
-const AuthFormButton: FC<Props> = ({ formState }) => {
+const AuthFormButton: FC<Props> = ({ formState, isLoading }) => {
     if (formState === AuthFormState.LOGIN) {
-        return <Button>Войти</Button>
+        return <Button disabled={isLoading}>{isLoading && <Spinner />}Войти</Button>
     } else {
-        return <Button>Создать</Button>
+        return <Button disabled={isLoading}>{isLoading && <Spinner />}Создать</Button>
     }
 }
 
