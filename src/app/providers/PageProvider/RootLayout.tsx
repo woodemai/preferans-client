@@ -7,8 +7,10 @@ export default function RootLayout() {
     return (
         <>
             <Header/>
-            <Toaster/>  
+            <Toaster/>
+            <div className="flex flex-col items-center w-full">  
             <Outlet />
+            </div>
         </>
     )
 }

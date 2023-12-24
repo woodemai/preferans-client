@@ -13,7 +13,7 @@ const links = [
 
 const Header = () => {
   return (
-    <header className="flex justify-between items-center p-4 border-b">
+    <header className="bg-card shadow-sm flex justify-between items-center p-4 border-b w-full">
         <div>
             <h1 className="text-3xl font-bold">Preferans</h1>
         </div>

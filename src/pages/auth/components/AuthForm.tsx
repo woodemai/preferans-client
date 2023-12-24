@@ -19,7 +19,7 @@ const AuthForm = () => {
     const [formState, setFormState] = useState(AuthFormState.LOGIN);
     const { user } = useAppSelector(state => state.authReducer)
     const [register] = authApi.useRegisterMutation()
-    const [login] = authApi.useLoginMutation()
+    const [login, {isLoading}] = authApi.useLoginMutation()
 
     const handleFormState = () => {
         if (formState === AuthFormState.LOGIN) {
@@ -58,7 +58,7 @@ const AuthForm = () => {
                             <FormItem>
                                 <FormLabel>Email</FormLabel>
                                 <FormControl>
-                                    <Input autoComplete="username" placeholder="email@mail.com" {...field} />
+                                    <Input disabled={isLoading} autoComplete="username" placeholder="email@mail.com" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -69,7 +69,7 @@ const AuthForm = () => {
                             <FormItem>
                                 <FormLabel>Password</FormLabel>
                                 <FormControl>
-                                    <Input autoComplete="password" type="password" {...field} />
+                                    <Input disabled={isLoading} autoComplete="password" type="password" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -81,14 +81,14 @@ const AuthForm = () => {
                                 <FormItem>
                                     <FormLabel>Name</FormLabel>
                                     <FormControl>
-                                        <Input autoComplete="name" placeholder="Nikolay" {...field} />
+                                        <Input disabled={isLoading} autoComplete="name" placeholder="Nikolay" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
                     }
-                    <AuthFormButton formState={formState} />
+                    <AuthFormButton isLoading={isLoading} formState={formState} />
                 </form>
             </Form>
             <AuthFormFooter formState={formState} setFormState={handleFormState} />

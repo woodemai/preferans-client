@@ -44,6 +44,7 @@ export const authApi = createApi({
                 method: "POST",
                 headers: { Authorization: `Bearer ${token}` },
             }),
+            providesTags: () => ["Auth"]
         }),
     })
 })
