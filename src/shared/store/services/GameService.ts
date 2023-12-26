@@ -1,4 +1,5 @@
 import { IGame } from "@/entities/game/Game";
+import { IUser } from "@/entities/user";
 import { BASE_URL } from "@/shared/lib/api";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
@@ -13,7 +14,27 @@ export const gameApi = createApi({
             query: (playerId) => ({
                 url: "/create",
                 credentials: "include",
-                params: {playerId},
+                params: { playerId },
+                method: "POST",
+                headers: { Authorization: `Bearer ${token}` },
+            }),
+            invalidatesTags: ['Game']
+        }),
+        connect: build.mutation<IGame, { playerId: string, gameId: string }>({
+            query: ({ playerId, gameId }) => ({
+                url: "/connect",
+                credentials: "include",
+                params: { playerId, gameId },
+                method: "POST",
+                headers: { Authorization: `Bearer ${token}` },
+            }),
+            invalidatesTags: ['Game']
+        }),
+        disconnect: build.mutation<IGame, { playerId: string, gameId: string }>({
+            query: ({ playerId, gameId }) => ({
+                url: "/disconnect",
+                credentials: "include",
+                params: { playerId, gameId },
                 method: "POST",
                 headers: { Authorization: `Bearer ${token}` },
             }),
@@ -22,6 +43,15 @@ export const gameApi = createApi({
         getAllGames: build.query<IGame[], void>({
             query: () => ({
                 url: "/all",
+                credentials: "include",
+                headers: { Authorization: `Bearer ${token}` },
+            }),
+            providesTags: () => ["Game"]
+        }),
+        getAllPlayers: build.query<IUser[], string>({
+            query: (gameId) => ({
+                url: "/players",
+                params: { gameId },
                 credentials: "include",
                 headers: { Authorization: `Bearer ${token}` },
             }),
