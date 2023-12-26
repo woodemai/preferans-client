@@ -9,9 +9,18 @@ const GameList = () => {
     return <div>Error!</div>
   }
   if (isLoading || !games) {
-    return (<div className="flex justify-center items-center w-full p-4">
-      <Spinner />
-    </div>)
+    return (
+      <div className="flex justify-center items-center w-full p-4">
+        <Spinner />
+      </div>
+    )
+  }
+  if (games?.length < 1) {
+    return (
+      <div className="text-2xl font-bold flex justify-center items-center w-full p-4">
+        No games found
+      </div>
+    )
   }
   return (
     <div className="flex flex-col w-full gap-y-4">

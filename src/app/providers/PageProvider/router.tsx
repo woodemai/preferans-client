@@ -3,7 +3,7 @@ import RootLayout from "./RootLayout";
 import HomePage from "@/pages/home/HomePage";
 import AuthPage from "@/pages/auth";
 import Spinner from "@/shared/components/ui/spinner";
-import CreateGamePage from "@/pages/create-game/CreateGamePage";
+import GamePage from "@/pages/game/GamePage";
 
 const router = createBrowserRouter([
     {
@@ -20,8 +20,8 @@ const router = createBrowserRouter([
                 loader: () => <Spinner/>
             },
             {
-                path: '/create-game',
-                element: <CreateGamePage/>,
+                path: `/game/:id`,
+                element: <GamePage/>,
             }
         ]
     }
