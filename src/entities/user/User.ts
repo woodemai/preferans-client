@@ -6,6 +6,7 @@ export type IUser = {
     password: string,
     name: string,
     score: number
+    ready: boolean,
     role: UserRole,
     createdAt: string,
     updatedAt: string

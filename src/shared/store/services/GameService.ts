@@ -40,6 +40,16 @@ export const gameApi = createApi({
             }),
             invalidatesTags: ['Game']
         }),
+        switchReady: build.mutation<IUser, string>({
+            query: (playerId) => ({
+                url: "/ready",
+                credentials: "include",
+                params: {playerId},
+                method: "PUT",
+                headers: { Authorization: `Bearer ${token}` },
+            }),
+            invalidatesTags: ['Game']
+        }),
         getAllGames: build.query<IGame[], void>({
             query: () => ({
                 url: "/all",
