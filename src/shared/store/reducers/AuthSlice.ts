@@ -1,6 +1,7 @@
 import { IUser } from "@/entities/user"
 import { createSlice } from "@reduxjs/toolkit"
 import { authApi } from "../services/AuthService"
+import { gameApi } from "../services/GameService"
 
 type AuthState = {
     user: IUser | null,
@@ -13,7 +14,13 @@ const initialState: AuthState = {
 export const authSlice = createSlice({
     name: 'auth',
     initialState,
-    reducers: { },
+    reducers: {
+        swtichReady(state) {
+            if (state.user) {
+                state.user.ready = !state.user.ready
+            }
+        },
+    },
     extraReducers: (builder) => {
         builder.addMatcher(
             authApi.endpoints.register.matchFulfilled,
@@ -50,6 +57,13 @@ export const authSlice = createSlice({
                 localStorage.setItem('token', payload.accessToken);
                 localStorage.setItem('user', JSON.stringify(payload.user))
             },
+        )
+        builder.addMatcher(
+            gameApi.endpoints.switchReady.matchFulfilled,
+            (state,{payload}) => {
+                state.user = payload
+                localStorage.setItem('user', JSON.stringify(payload))
+            }
         )
     }
 })
