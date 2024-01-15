@@ -3,10 +3,13 @@ import PlayersList from "./components/PlayersList"
 import DisconnectButton from "./components/DisconnectButton"
 import ReadyButton from "./components/ReadyButton"
 import { useAppSelector } from "@/shared/store/hooks"
+import { useSocket } from "@/shared/hooks/useSocket"
 
 const GamePage = () => {
     const { id } = useParams()
     const {user} = useAppSelector(state => state.authReducer)
+    const {response}= useSocket(id ?? "", user?.id ?? "");
+    
     if (id && user) {
         return (
             <div className="flex flex-col w-full sm:max-w-xl gap-y-4 mt-4">

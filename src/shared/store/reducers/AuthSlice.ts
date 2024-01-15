@@ -15,11 +15,10 @@ export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        swtichReady(state) {
-            if (state.user) {
-                state.user.ready = !state.user.ready
-            }
-        },
+        handleStorageState(state, {payload}) {
+            state.user = payload.user
+            state.token = payload.token
+        }
     },
     extraReducers: (builder) => {
         builder.addMatcher(

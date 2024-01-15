@@ -5,6 +5,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const token = localStorage.getItem('token');
 
+
 export const gameApi = createApi({
     reducerPath: "gameApi",
     baseQuery: fetchBaseQuery({ baseUrl: `${BASE_URL}/game` }),
