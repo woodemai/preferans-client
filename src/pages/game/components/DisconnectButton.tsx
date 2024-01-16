@@ -11,6 +11,7 @@ type Props = {
 const DisconnectButton: FC<Props> = ({ gameId, userId }) => {
 
     const [disconnect] = gameApi.useDisconnectMutation()
+    
     const navigate = useNavigate()
 
     const handleDisconnect = async () => {
