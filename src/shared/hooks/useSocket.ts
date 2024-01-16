@@ -1,31 +1,33 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { io } from "socket.io-client";
+import { gameApi } from "../store/services/GameService";
+import { useAppDispatch } from "../store/hooks";
 
-const BASE_URL = "http://0.0.0.0:8086";
+const BASE_URL = "http://localhost:8086";
 
 export const useSocket = (gameId: string, playerId: string) => {
-  const [socket, setSocket] = useState(
-    io(BASE_URL, {
+  const [connect] = gameApi.useConnectMutation()
+  const [disconnect] = gameApi.useDisconnectMutation()
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    const s = io(BASE_URL, {
       query: { gameId: gameId, playerId: playerId },
     })
-  );
 
-  const [isConnected, setIsConnected] = useState(false);
 
-  useEffect(() => {
-    setSocket(
-      io(BASE_URL, {
-        query: { gameId: gameId, playerId: playerId },
-      })
-    );
-
-    socket.on("connect", () => {
-      setIsConnected(true);
+    s.on("connect", () => {
+      console.log('connected to the server');
+      connect({ playerId, gameId })
     });
 
+    s.on("users", async () => {
+      console.log('users');
+      dispatch(gameApi.util.invalidateTags(['Game']))
+    })
     return () => {
-      socket.disconnect();
+      console.log('disconnected to the server');
+      disconnect({ playerId, gameId })
+      s.disconnect();
     };
-  }, [gameId, playerId, socket]);
-  return { isConnected };
+  }, [connect, disconnect, dispatch, gameId, playerId]);
 };

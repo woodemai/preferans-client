@@ -10,6 +10,7 @@ export const gameApi = createApi({
     reducerPath: "gameApi",
     baseQuery: fetchBaseQuery({ baseUrl: `${BASE_URL}/game` }),
     tagTypes: ['Game'],
+    invalidationBehavior: 'immediately',
     endpoints: (build) => ({
         createGame: build.mutation<IGame, string>({
             query: (playerId) => ({

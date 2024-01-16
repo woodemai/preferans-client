@@ -14,16 +14,10 @@ type Props = {
 
 const GameCard:FC<Props> = ({game}) => {
   const {user} = useAppSelector(state => state.authReducer)
-  // const [connect, {isLoading}] = gameApi.useConnectMutation()
-  const dispatch = useAppDispatch()
-  const {connectToGame} = gameSlice.actions;
   const navigate = useNavigate()
 
   const handleConnect = async () => {
     if(user) {
-      const game  = await api
-      // connect({playerId: user.id, gameId: game.id})
-      dispatch(connectToGame({gameId: game.id, userId: user.id}))
       navigate(`game/${game.id}`)
     }
   }
