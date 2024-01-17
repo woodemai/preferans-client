@@ -1,12 +1,12 @@
 import { IUser } from '@/entities/user'
-import { FC } from 'react'
+import { FC, memo } from 'react'
 import Ready from './Ready'
 
 type Props = {
     player: IUser
 }
 
-const PlayerItem: FC<Props> = ({ player }) => {
+const PlayerItem: FC<Props> = memo(({ player }) => {
 
     return (
         <div className='p-4 bg-card rounded-sm shadow-sm w-full sm:max-w-lg'>
@@ -18,6 +18,6 @@ const PlayerItem: FC<Props> = ({ player }) => {
 
         </div>
     )
-}
+})
 
 export default PlayerItem

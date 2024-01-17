@@ -12,7 +12,7 @@ const CreateGameButton = () => {
     if (user) {
         const handleCreate = async () => {
             try {
-                const res = await create(user.id);
+                const res = await create(user.id)
                 navigate(`/game/${res.data.id}`)
             } catch (error) {
                 console.log(error);
@@ -21,7 +21,7 @@ const CreateGameButton = () => {
         }
 
         return (
-            <Button disabled={isLoading} type="button" size='lg' onClick={handleCreate}>{isLoading && <Spinner />}Create game</Button>
+            <Button  type="button" size='lg' onClick={handleCreate}>{isLoading && <Spinner />}Create game</Button>
         )
     }
 }

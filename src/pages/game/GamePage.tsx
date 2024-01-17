@@ -3,17 +3,26 @@ import PlayersList from "./components/PlayersList"
 import DisconnectButton from "./components/DisconnectButton"
 import ReadyButton from "./components/ReadyButton"
 import { useAppSelector } from "@/shared/store/hooks"
+import GameHeading from "./components/GameHeading"
+import { useSocket } from "@/shared/hooks/useSocket"
+
+
+
 
 const GamePage = () => {
+
     const { id } = useParams()
-    const {user} = useAppSelector(state => state.authReducer)
+    const { user } = useAppSelector(state => state.authReducer)
+
+    const {switchReady} = useSocket(id ?? '', user?.id ?? '');
+
     if (id && user) {
         return (
             <div className="flex flex-col w-full sm:max-w-xl gap-y-4 mt-4">
-                <h1 className="text-3xl font-bold">Игра создана</h1>
+                <GameHeading />
                 <PlayersList gameId={id} />
-                <ReadyButton id={user.id} ready={user.ready}/>
-                <DisconnectButton gameId={id} userId={user.id} />
+                <ReadyButton ready={user.ready} switchReady={switchReady} />
+                <DisconnectButton />
             </div>
         )
     }
