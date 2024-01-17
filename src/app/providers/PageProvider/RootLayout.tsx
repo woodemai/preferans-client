@@ -4,6 +4,7 @@ import Header from "./Header";
 import { useEffect } from "react";
 import { useAppDispatch } from "@/shared/store/hooks";
 import { authSlice } from "@/shared/store/reducers/AuthSlice";
+import { authApi } from "@/shared/store/services/AuthService";
 
 export default function RootLayout() {
       const userJSON = localStorage.getItem('user')
@@ -13,6 +14,7 @@ export default function RootLayout() {
         if(userJSON && token) {
             const user = JSON.parse(userJSON)
             dispatch(authSlice.actions.handleStorageState({user, token}))
+            dispatch(authApi.util.invalidateTags(['Auth']))
         }
       }, [dispatch, token, userJSON])
     return (

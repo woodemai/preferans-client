@@ -14,14 +14,14 @@ const GamePage = () => {
     const { id } = useParams()
     const { user } = useAppSelector(state => state.authReducer)
 
-    useSocket(id ?? '', user?.id ?? '');
+    const {switchReady} = useSocket(id ?? '', user?.id ?? '');
 
     if (id && user) {
         return (
             <div className="flex flex-col w-full sm:max-w-xl gap-y-4 mt-4">
                 <GameHeading />
                 <PlayersList gameId={id} />
-                <ReadyButton id={user.id} ready={user.ready} />
+                <ReadyButton ready={user.ready} switchReady={switchReady} />
                 <DisconnectButton />
             </div>
         )
