@@ -1,4 +1,4 @@
-import CreateGameButton from "@/features/CreateGameButton";
+import CreateGameButton from "@/features/button/CreateGameButton";
 import GameList from "@/widgets/GameList";
 
 export default function HomePage() {

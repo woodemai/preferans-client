@@ -1,69 +1,88 @@
-import { IUser } from "@/entities/user"
-import { createSlice } from "@reduxjs/toolkit"
-import { authApi } from "../services/AuthService"
-import { gameApi } from "../services/GameService"
+import { IUser } from "@/entities/user";
+import { createSlice } from "@reduxjs/toolkit";
+import { authApi } from "../services/AuthService";
+import { gameApi } from "../services/GameService";
 
 type AuthState = {
-    user: IUser | null,
-    token: string | null,
-}
+  user: IUser;
+  token: string;
+  error: string | number | undefined;
+  isLoading: boolean;
+  isAuth: boolean;
+};
 const initialState: AuthState = {
-    user: null,
-    token: null
-}
+  user: {} as IUser,
+  token: "",
+  error: "",
+  isLoading: false,
+  isAuth: false,
+};
 export const authSlice = createSlice({
-    name: 'auth',
-    initialState,
-    reducers: {
-        handleStorageState(state, {payload}) {
-            state.user = payload.user
-            state.token = payload.token
+  name: "auth",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addMatcher(
+        authApi.endpoints.register.matchFulfilled,
+        (state, { payload }) => {
+          state.token = payload.accessToken;
+          state.user = payload.user;
+          state.isAuth = true;
+          localStorage.setItem("token", payload.accessToken);
+          localStorage.setItem("user", JSON.stringify(payload.user));
         }
-    },
-    extraReducers: (builder) => {
-        builder.addMatcher(
-            authApi.endpoints.register.matchFulfilled,
-            (state, { payload }) => {
-                state.token = payload.accessToken;
-                state.user = payload.user
-                localStorage.setItem('token', payload.accessToken);
-                localStorage.setItem('user', JSON.stringify(payload.user))
-            }
-        )
-        builder.addMatcher(
-            authApi.endpoints.login.matchFulfilled,
-            (state, { payload }) => {
-                state.token = payload.accessToken;
-                state.user = payload.user
-                localStorage.setItem('token', payload.accessToken);
-                localStorage.setItem('user', JSON.stringify(payload.user))
-            },
-        )
-        builder.addMatcher(
-            authApi.endpoints.logout.matchFulfilled,
-            (state) => {
-                state.token = null;
-                state.user = null;
-                localStorage.removeItem('token')
-                localStorage.removeItem('user')
-            },
-        )
-        builder.addMatcher(
-            authApi.endpoints.refresh.matchFulfilled,
-            (state, { payload }) => {
-                state.token = payload.accessToken;
-                state.user = payload.user
-                localStorage.setItem('token', payload.accessToken);
-                localStorage.setItem('user', JSON.stringify(payload.user))
-            },
-        )
-        builder.addMatcher(
-            gameApi.endpoints.switchReady.matchFulfilled,
-            (state,{payload}) => {
-                state.user = payload
-                localStorage.setItem('user', JSON.stringify(payload))
-            }
-        )
-    }
-})
+      )
+      .addMatcher(
+        authApi.endpoints.login.matchFulfilled,
+        (state, { payload }) => {
+          state.token = payload.accessToken;
+          state.user = payload.user;
+          state.isAuth = true;
+          localStorage.setItem("token", payload.accessToken);
+          localStorage.setItem("user", JSON.stringify(payload.user));
+        }
+      )
+      .addMatcher(authApi.endpoints.logout.matchFulfilled, (state) => {
+        state.token = "";
+        state.user = {} as IUser;
+        state.isAuth = false;
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+      })
+      .addMatcher(
+        authApi.endpoints.refresh.matchFulfilled,
+        (state, { payload }) => {
+          state.isLoading = false;
+          state.token = payload.accessToken;
+          state.user = payload.user;
+          state.isAuth = true;
+          localStorage.setItem("token", payload.accessToken);
+          localStorage.setItem("user", JSON.stringify(payload.user));
+        }
+      )
+      .addMatcher(authApi.endpoints.refresh.matchPending, (state) => {
+        state.isLoading = true;
+      })
+      .addMatcher(
+        authApi.endpoints.refresh.matchRejected,
+        (state, { payload }) => {
+          state.isLoading = false;
+          state.error = payload?.status;
+          state.isAuth = false;
+          state.token = "";
+          state.user = {} as IUser;
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+        }
+      )
+      .addMatcher(
+        gameApi.endpoints.switchReady.matchFulfilled,
+        (state, { payload }) => {
+          state.user = payload;
+          localStorage.setItem("user", JSON.stringify(payload));
+        }
+      );
+  },
+});
 export default authSlice.reducer;

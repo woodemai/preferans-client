@@ -9,15 +9,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/shared/components/ui/form";
 import { Input } from "@/shared/components/ui/input";
 import AuthFormButton from "./AuthFormButton";
-import { useAppSelector } from "@/shared/store/hooks";
 import { authApi } from "@/shared/store/services/AuthService";
 import { IUser } from "@/entities/user";
-import { Navigate } from "react-router-dom";
 
 
 const AuthForm = () => {
     const [formState, setFormState] = useState(AuthFormState.LOGIN);
-    const { user } = useAppSelector(state => state.authReducer)
     const [register] = authApi.useRegisterMutation()
     const [login, {isLoading}] = authApi.useLoginMutation()
 
@@ -45,9 +42,7 @@ const AuthForm = () => {
             register({ ...values } as IUser)
         }
     }
-    if (user) {
-        return <Navigate to={'/'} />
-    }
+ 
     return (
         <div className="bg-card shadow-md rounded-md p-4 w-full md:max-w-xl">
             <AuthFormHeading formState={formState} />

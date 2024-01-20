@@ -15,6 +15,8 @@ const PlayersList: FC<Props> = ({ gameId }) => {
   useEffect(() => {
     if (data) {
       setPlayers(data)
+      console.log(data);
+      
     }
   }, [data])
 

@@ -7,43 +7,47 @@ import { authApi } from "../store/services/AuthService";
 const BASE_URL = "http://localhost:8086";
 
 export const useSocket = (gameId: string, playerId: string) => {
+  const [socket, setSocket] = useState<undefined | Socket>();
+  //const [loading, setLoading] = useState(false);
+  // const [connect, { isLoading: connectionLoader }] =
+  //   gameApi.useConnectMutation();
+  // const [disconnect, { isLoading: disconnectionLoader }] =
+  //   gameApi.useDisconnectMutation();
 
-  const [socket, setSocket] = useState<undefined | Socket>()
-  const [connect] = gameApi.useConnectMutation()
-  const [disconnect] = gameApi.useDisconnectMutation()
-
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   const switchReady = useCallback(() => {
     if (socket) {
-      socket.emit("switch_ready")
+      socket.emit("switch_ready");
     }
-  }, [socket])
-
+  }, [socket]);
+  // useEffect(() => {
+  //   setLoading(connectionLoader || disconnectionLoader);
+  // }, [connectionLoader, disconnectionLoader]);
 
   useEffect(() => {
     const s = io(BASE_URL, {
       query: { gameId: gameId, playerId: playerId },
-    })
-    setSocket(s)
-
+    });
+    setSocket(s);
 
     s.on("connect", () => {
-      console.log('connected to the server');
-      connect({ playerId, gameId })
+      console.log("connected to the server");
     });
 
     s.on("users", async () => {
-      console.log('users');
-      dispatch(gameApi.util.invalidateTags(['Game']))
-      dispatch(authApi.util.invalidateTags(['Auth']))
-    })
+      console.log("users");
+      dispatch(gameApi.util.invalidateTags(["Users"]));
+      dispatch(authApi.util.invalidateTags(["Auth"]));
+    });
+    s.on("all_ready", () => {
+      gameApi.util.invalidateTags(["Game"]);
+    });
 
     return () => {
-      console.log('disconnected to the server');
-      disconnect({ playerId, gameId })
+      console.log("disconnected to the server");
       s.disconnect();
     };
-  }, [connect, disconnect, dispatch, gameId, playerId]);
-  return { switchReady }
+  }, [dispatch, gameId, playerId]);
+  return { switchReady };
 };
