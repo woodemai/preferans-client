@@ -41,8 +41,6 @@ export const authApi = createApi({
             query: () => ({
                 url: "/refresh",
                 credentials: "include",
-                method: "POST",
-                headers: { Authorization: `Bearer ${token}` },
             }),
             providesTags: () => ["Auth"]
         }),

@@ -1,3 +1,4 @@
+import { ICard } from "../card"
 import { UserRole } from "./UserRole"
 
 export type IUser = {
@@ -8,6 +9,5 @@ export type IUser = {
     score: number
     ready: boolean,
     role: UserRole,
-    createdAt: string,
-    updatedAt: string
+    cards: ICard[]      
 }

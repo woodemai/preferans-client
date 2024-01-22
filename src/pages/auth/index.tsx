@@ -1,10 +1,23 @@
+import { useAppSelector } from "@/shared/store/hooks"
 import AuthForm from "./components/AuthForm"
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const AuthPage = () => {
+  const { isAuth } = useAppSelector(state => state.authReducer);
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (isAuth) {
+      navigate('/')
+    }
+  }, [isAuth, navigate])  
+  
+
   return (
     <div className="w-full h-screen flex flex-col gap-y-8 justify-center items-center">
-        <h1 className="text-3xl font-bold">Preferans the Game</h1>
-        <AuthForm/>
+      <h1 className="text-3xl font-bold">Preferans the Game</h1>
+      <AuthForm />
     </div>
   )
 }
