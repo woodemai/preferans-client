@@ -10,7 +10,7 @@ export const useSocket = (gameId: string, playerId: string) => {
   const [socket, setSocket] = useState<undefined | Socket>();
 
   const dispatch = useAppDispatch();
-  const { handleGameInfo } = gameSlice.actions;
+  const { handleGameInfo, handleAllReady } = gameSlice.actions;
 
   const switchReady = useCallback(() => {
     if (socket) {
@@ -25,15 +25,17 @@ export const useSocket = (gameId: string, playerId: string) => {
     setSocket(s);
 
     s.on("info", (data: GameInfo) => {
-      console.log(data);
       dispatch(handleGameInfo(data))
       
     })
+    s.on("all_ready", () => {
+      dispatch(handleAllReady());
+    });
  
 
     return () => {
       s.disconnect();
     };
-  }, [dispatch, gameId, handleGameInfo, playerId]);
+  }, [dispatch, gameId, handleAllReady, handleGameInfo, playerId]);
   return { switchReady };
 };

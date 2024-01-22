@@ -9,14 +9,14 @@ type GameState = {
   error: string | number | undefined;
 
   game: IGame;
-  users: IUser[];
+  players: IUser[];
 };
 const initialState: GameState = {
   isLoading: false,
   error: undefined,
 
   game: {} as IGame,
-  users: [] as IUser[],
+  players: [] as IUser[],
 };
 
 export const gameSlice = createSlice({
@@ -26,9 +26,13 @@ export const gameSlice = createSlice({
     handleConnect(state, { payload }) {
       state.game = payload.game;
     },
-    handleGameInfo (state, {payload}: {payload: GameInfo}) {
-      state.game = payload.game
-      state.users = payload.users
+    handleGameInfo(state, { payload }: { payload: GameInfo }) {
+      state.isLoading = false;
+      state.game = payload.game;
+      state.players = payload.users;
+    },
+    handleAllReady(state) {
+      state.isLoading = true;
     },
   },
   extraReducers: (builder) => {
