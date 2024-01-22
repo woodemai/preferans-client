@@ -1,7 +1,6 @@
 import { IUser } from "@/entities/user";
 import { createSlice } from "@reduxjs/toolkit";
 import { authApi } from "../services/AuthService";
-import { gameApi } from "../services/GameService";
 
 type AuthState = {
   user: IUser;
@@ -74,13 +73,6 @@ export const authSlice = createSlice({
           state.user = {} as IUser;
           localStorage.removeItem("token");
           localStorage.removeItem("user");
-        }
-      )
-      .addMatcher(
-        gameApi.endpoints.switchReady.matchFulfilled,
-        (state, { payload }) => {
-          state.user = payload;
-          localStorage.setItem("user", JSON.stringify(payload));
         }
       );
   },

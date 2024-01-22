@@ -1,4 +1,4 @@
-import ICard, { Card } from "@/entities/card";
+import { Card, ICard } from "@/entities/card";
 import { FC } from "react";
 
 interface Props {
@@ -7,7 +7,7 @@ interface Props {
 const MyCards: FC<Props> = ({ cards }) => {
 
     return (
-        <div>
+        <div className="grid grid-cols-4 gap-4 mt-4">
             {cards.map((card) => (
                 <Card key={card.id} suit={card.suit} rank={card.rank} />
             ))}

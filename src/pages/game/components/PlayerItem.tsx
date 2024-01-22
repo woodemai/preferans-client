@@ -9,7 +9,7 @@ type Props = {
 const PlayerItem: FC<Props> = memo(({ player }) => {
 
     return (
-        <div className='p-4 bg-card rounded-sm shadow-sm w-full sm:max-w-lg'>
+        <div className='p-4 bg-card rounded-sm shadow-sm w-full'>
             <div className='flex gap-4'>
                 <h3 className='font-bold mb-4'>{player.name}</h3>
                 <Ready ready={player.ready} />
