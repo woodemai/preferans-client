@@ -1,10 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { Socket, io } from "socket.io-client";
 import { useAppDispatch } from "../store/hooks";
-import { IUser } from "@/entities/user";
 import { gameSlice } from "../store/reducers/GameSlice";
 import { GameInfo } from "@/entities/game/GameStartedResponse";
-import { IGame } from "@/entities/game/Game";
 
 const BASE_URL = "http://localhost:8086";
 

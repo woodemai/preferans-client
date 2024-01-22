@@ -49,13 +49,13 @@ const Card: FC<Props> = ({ rank, suit }) => {
     }, [suit])
 
     return (
-        <div className={cn("bg-white rounded-md shadow-md h-[200px] w-[140px] p-2", isSuitRed() && "text-red-500")}>
+        <div className={cn("bg-white rounded-md shadow-md h-[200px] w-[140px] p-2 hover:-translate-y-4 hover:z-[100] transition-all duration-100", isSuitRed() && "text-rose-500")}>
             <div className="w-full h-full ring-1 rounded-md ring-gray-300 relative flex justify-center items-center">
                 <div className="absolute top-2 left-2 flex justify-center flex-col items-center leading-4">
                     <div>{resolvedRank}</div>
                     <div>{resolvedSuit}</div>
                 </div>
-                <div className="text-4xl">
+                <div className="text-5xl">
                     {resolvedSuit}
                 </div>
                 <div className="absolute bottom-2 right-2 rotate-180 flex justify-center flex-col items-center leading-4">
