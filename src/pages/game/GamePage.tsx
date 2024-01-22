@@ -17,6 +17,7 @@ import { gameApi } from "@/shared/store/services/GameService"
 
 const GamePage = () => {
 
+
     const { id } = useParams()
     const { user } = useAppSelector(state => state.authReducer)
     gameApi.useGetGameQuery(id ?? "");
