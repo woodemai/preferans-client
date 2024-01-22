@@ -1,3 +1,4 @@
+import Logo from "@/shared/components/Logo";
 import NavItem from "./NavItem";
 
 const links = [
@@ -14,7 +15,8 @@ const links = [
 const Header = () => {
   return (
     <header className="bg-card shadow-sm flex justify-between items-center p-4 border-b w-full">
-        <div>
+        <div className="flex flex-row gap-4">
+            <Logo/>
             <h1 className="text-3xl font-bold">Preferans</h1>
         </div>
         <nav>

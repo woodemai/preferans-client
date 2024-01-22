@@ -4,7 +4,8 @@ import { cn } from "@/shared/lib/utils";
 
 interface Props {
     rank: Rank,
-    suit: Suit
+    suit: Suit,
+    interactive?: boolean
 }
 const resolveSuit = (suit: Suit) => {
     switch (suit) {
@@ -39,7 +40,7 @@ const resolveRank = (rank: Rank) => {
             return <>T</>
     }
 }
-const Card: FC<Props> = ({ rank, suit }) => {
+const Card: FC<Props> = ({ rank, suit, interactive = true }) => {
 
     const resolvedSuit = resolveSuit(suit)
     const resolvedRank = resolveRank(rank)
@@ -48,8 +49,13 @@ const Card: FC<Props> = ({ rank, suit }) => {
         return suit === Suit.HEARTS || suit === Suit.DIAMONDS
     }, [suit])
 
+    const handleDropCard = () => {
+        console.log(`double clicked ${rank} ${suit}`);
+
+    }
+
     return (
-        <div className={cn("bg-white rounded-md shadow-md h-[200px] w-[140px] p-2 hover:-translate-y-4 hover:z-[100] transition-all duration-100", isSuitRed() && "text-rose-500")}>
+        <button onDoubleClick={handleDropCard} className={cn("bg-white rounded-lg shadow-md h-[160px] w-[100px] p-2  transition-all duration-100 cursor-default", isSuitRed() && "text-rose-500", interactive && "hover:-translate-y-4 cursor-pointer hover:z-[100] ")}>
             <div className="w-full h-full ring-1 rounded-md ring-gray-300 relative flex justify-center items-center">
                 <div className="absolute top-2 left-2 flex justify-center flex-col items-center leading-4">
                     <div>{resolvedRank}</div>
@@ -63,7 +69,7 @@ const Card: FC<Props> = ({ rank, suit }) => {
                     <div>{resolvedSuit}</div>
                 </div>
             </div>
-        </div>
+        </button>
     )
 }
 
