@@ -14,6 +14,5 @@ const PlayersList = () => {
     </div>
   )
 }
-}
 
 export default PlayersList
