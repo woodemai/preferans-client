@@ -1,4 +1,4 @@
-import GameCard from "@/entities/game/GameCard"
+import {GameCard} from "@/entities/game"
 import Spinner from "@/shared/components/ui/spinner"
 import { gameApi } from "@/shared/store/services/GameService"
 

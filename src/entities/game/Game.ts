@@ -6,4 +6,5 @@ export type IGame = {
     state: GameState,
     size: number
     cards: ICard[]
+    currentPlayerIndex: number
 }

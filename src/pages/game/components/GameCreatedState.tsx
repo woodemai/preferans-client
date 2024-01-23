@@ -1,4 +1,4 @@
-import { GameState } from "@/entities/game/GameState";
+import { GameState } from "@/entities/game";
 import DisconnectButton from "@/features/button/DisconnectButton";
 import ReadyButton from "@/features/button/ReadyButton";
 import GameHeading from "./GameHeading";

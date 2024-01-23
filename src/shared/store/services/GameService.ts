@@ -1,4 +1,4 @@
-import { IGame } from "@/entities/game/Game";
+import { IGame } from "@/entities/game";
 import { BASE_URL } from "@/shared/lib/api";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 

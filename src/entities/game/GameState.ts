@@ -1,5 +1,6 @@
 export enum GameState {
     CREATED = 'CREATED',
-    STARTED = 'STARTED',
-    ENDED = 'ENDED'
+    TRADING = 'TRADING',
+    ENDED = 'ENDED',
+    GAMEPLAY = 'GAMEPLAY',
 }

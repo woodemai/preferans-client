@@ -1,8 +1,9 @@
-import { IGame } from "@/entities/game/Game";
+import { IGame } from "@/entities/game";
 import { createSlice } from "@reduxjs/toolkit";
 import { gameApi } from "../services/GameService";
 import { IUser } from "@/entities/user";
-import { GameInfo } from "@/entities/game/GameStartedResponse";
+import { GameInfo } from "@/entities/game/GameInfo";
+import { MoveInfo } from "@/entities/game/MoveInfo";
 
 type GameState = {
   isLoading: boolean;
@@ -33,6 +34,17 @@ export const gameSlice = createSlice({
     },
     handleAllReady(state) {
       state.isLoading = true;
+    },
+    handleMoveInfo(state, { payload }: { payload: MoveInfo }) {
+      state.game.cards.push(payload.card);
+      state.players = state.players.map((player) => {
+        if (player.id === payload.playerId) {
+          player.cards = player.cards.filter(
+            (card) => card.id !== payload.card.id
+          );
+        }
+        return player;
+      });
     },
   },
   extraReducers: (builder) => {

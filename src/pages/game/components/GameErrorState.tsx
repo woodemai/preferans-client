@@ -1,4 +1,4 @@
-import { IGame } from "@/entities/game/Game";
+import { IGame } from "@/entities/game";
 import { Button } from "@/shared/components/ui/button";
 import { FC } from "react";
 import { Link } from "react-router-dom";
