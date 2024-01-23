@@ -1,8 +1,8 @@
-import { IGame } from "@/entities/game/Game";
+import { IGame } from "@/entities/game";
 import { createSlice } from "@reduxjs/toolkit";
 import { gameApi } from "../services/GameService";
 import { IUser } from "@/entities/user";
-import { GameInfo } from "@/entities/game/GameStartedResponse";
+import { GameInfo } from "@/entities/game/GameInfo";
 
 type GameState = {
   isLoading: boolean;

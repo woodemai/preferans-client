@@ -1,10 +1,11 @@
 import { ICard } from "@/entities/card";
-import { GameState } from "@/entities/game/GameState";
+import { GameState } from "@/entities/game";
 import { IUser } from "@/entities/user";
 import useGetUserRivals from "@/shared/hooks/useGetUserRivals";
 import GameCards from "@/widgets/GameCards";
 import MyCards from "@/widgets/MyCards";
 import RivalCards from "@/widgets/RivalCards";
+import TradingScreen from "@/widgets/TradingScreen";
 import { FC } from "react";
 
 interface Props {
@@ -31,6 +32,7 @@ const GameStartedState:FC<Props> = ({
                 <RivalCards type="left" cards={leftRival.cards} />
                 <RivalCards type="right" cards={rightRival.cards} />
                 <GameCards cards={gameCards} />
+                <TradingScreen/>
             </>
         )
     }
