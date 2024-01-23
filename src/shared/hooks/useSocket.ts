@@ -3,6 +3,9 @@ import { Socket, io } from "socket.io-client";
 import { useAppDispatch } from "../store/hooks";
 import { gameSlice } from "../store/reducers/GameSlice";
 import { GameInfo } from "@/entities/game/GameInfo";
+import { IBet } from "../helpers/getTradingChoices";
+import { MoveInfo } from "@/entities/game/MoveInfo";
+import { ICard } from "@/entities/card";
 
 const BASE_URL = "http://localhost:8086";
 
@@ -10,13 +13,28 @@ export const useSocket = (gameId: string, playerId: string) => {
   const [socket, setSocket] = useState<undefined | Socket>();
 
   const dispatch = useAppDispatch();
-  const { handleGameInfo, handleAllReady } = gameSlice.actions;
+  const { handleGameInfo, handleAllReady, handleMoveInfo } = gameSlice.actions;
 
   const switchReady = useCallback(() => {
     if (socket) {
       socket.emit("switch_ready");
     }
   }, [socket]);
+
+  const handleChoice = useCallback((choice:IBet) => {
+    if (socket) {
+      socket.emit("send_bet", choice);
+    }
+  }, [socket]);
+
+  const handleCard = useCallback(
+    (card: ICard) => {
+      if (socket) {
+        socket.emit("send_card", card);
+      }
+    },
+    [socket]
+  );
 
   useEffect(() => {
     const s = io(BASE_URL, {
@@ -28,6 +46,9 @@ export const useSocket = (gameId: string, playerId: string) => {
       dispatch(handleGameInfo(data))
       
     })
+    s.on("move", (data: MoveInfo) => {
+      dispatch(handleMoveInfo(data));
+    });
     s.on("all_ready", () => {
       dispatch(handleAllReady());
     });
@@ -36,6 +57,6 @@ export const useSocket = (gameId: string, playerId: string) => {
     return () => {
       s.disconnect();
     };
-  }, [dispatch, gameId, handleAllReady, handleGameInfo, playerId]);
-  return { switchReady };
+  }, [dispatch, gameId, handleAllReady, handleGameInfo, handleMoveInfo, playerId]);
+  return { switchReady, handleChoice, handleCard };
 };
