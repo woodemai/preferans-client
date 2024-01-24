@@ -16,6 +16,7 @@ const GamePage = () => {
     const { user } = useAppSelector(state => state.authReducer)
     const { players, game, isLoading } = useAppSelector(state => state.gameReducer)
     const { switchReady, handleChoice, handleCard } = useSocket(id ?? '', user.id);
+    const { switchReady, handleChoice, handleCard } = useSocket(id ?? '', user.id);
 
 
     return (

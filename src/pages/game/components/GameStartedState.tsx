@@ -22,6 +22,7 @@ interface Props {
 }
 
 const GameStartedState: FC<Props> = ({
+const GameStartedState: FC<Props> = ({
     userId,
     state,
     players,
