@@ -63,13 +63,6 @@ export const useSocket = (gameId: string, playerId: string) => {
     return () => {
       s.disconnect();
     };
-  }, [
-    dispatch,
-    gameId,
-    handleAllReady,
-    handleGameInfo,
-    handleMoveInfo,
-    playerId,
-  ]);
+  }, [dispatch, gameId, handleAllReady, handleGameInfo, handleMoveInfo, handleNextTurn, playerId]);
   return { switchReady, handleChoice, handleCard };
 };

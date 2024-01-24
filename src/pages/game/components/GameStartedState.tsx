@@ -4,12 +4,12 @@ import { IUser } from "@/entities/user";
 import { IBet } from "@/shared/helpers/getTradingChoices";
 import useGetUserRivals from "@/shared/hooks/useGetUserRivals";
 import { useTurn } from "@/shared/hooks/useTurn";
-import PurchaseCards from "@/widgets/PurchaseCards";
 import MyCards from "@/widgets/MyCards";
+import PurchaseCards from "@/widgets/PurchaseCards";
 import RivalCards from "@/widgets/RivalCards";
+import TableCards from "@/widgets/TableCards";
 import TradingScreen from "@/widgets/TradingScreen";
 import { FC, useEffect, useState } from "react";
-import TableCards from "@/widgets/TableCards";
 
 interface Props {
     userId: string,
@@ -21,7 +21,6 @@ interface Props {
     handleCard: (card: ICard) => void
 }
 
-const GameStartedState: FC<Props> = ({
 const GameStartedState: FC<Props> = ({
     userId,
     state,
