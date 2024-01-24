@@ -1,13 +1,8 @@
-import { Suit } from "@/entities/card";
+import { TradingScreenItem } from "@/features/TradingScreenItem";
 import { BetType, IBet, getChoices } from "@/shared/helpers/getTradingChoices"
-import { resolveSuit } from "@/shared/helpers/resolveCard";
-import { cn } from "@/shared/lib/utils";
 
 const choices = getChoices()
-const isSuitRed = (suit?: Suit | "NT") => {
-    if (!suit) return false;
-    return suit === Suit.HEARTS || suit === Suit.DIAMONDS
-}
+
 
 const TradingScreen = ({ handleChoice }: { handleChoice: (choice: IBet) => void }) => {
 
@@ -16,15 +11,11 @@ const TradingScreen = ({ handleChoice }: { handleChoice: (choice: IBet) => void 
             <h1 className="font-bold tracking-tight text-xl mb-2">Trading</h1>
             <div className="rounded-sm">
                 <div className="grid grid-cols-5 grid-rows-5">
-                    {choices.map((choice, i) =>
-                        <button onClick={() => handleChoice(choice)} className="flex justify-center items-center cursor-pointer hover:bg-accent border border-gray-200 p-1 gap-1" key={i}>
-                            <div>{choice.value}</div>
-                            <div className={cn(isSuitRed(choice.suit) && "text-red-500")}>{resolveSuit(choice.suit)}</div>
-                        </button>)}
+                    {choices.map((choice, i) => <TradingScreenItem handleChoice={handleChoice} choice={choice} key={i} />)}
                 </div>
                 <div className="flex justify-evenly w-full">
-                    <button onClick={() => handleChoice({type:BetType.MIZER})} className="text-center p-1 w-full cursor-pointer hover:bg-accent border border-gray-200 bt-0">Мизер</button>
-                    <button onClick={() => handleChoice({ type: BetType.PASS })} className="text-center p-1 w-full cursor-pointer hover:bg-accent border border-gray-200 bt-0">Пас</button>
+                    <TradingScreenItem handleChoice={handleChoice} choice={{ type: BetType.MIZER }} />
+                    <TradingScreenItem handleChoice={handleChoice} choice={{ type: BetType.PASS }} />
                 </div>
             </div>
         </div>

@@ -19,7 +19,11 @@ const initialState: AuthState = {
 export const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    handleSwitchReady(state){
+      state.user.ready = !state.user.ready
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addMatcher(

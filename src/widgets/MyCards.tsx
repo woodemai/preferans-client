@@ -5,11 +5,12 @@ import { FC } from "react";
 interface Props {
     cards: ICard[],
     interactive?: boolean,
+    active?: boolean
     handleCard: (card: ICard) => void
 
 }
 
-const MyCards: FC<Props> = ({ cards, interactive = false, handleCard }) => {
+const MyCards: FC<Props> = ({ cards, interactive = false, active = false, handleCard }) => {
 
     const handleClick = (card:ICard) => {
         if(interactive) {
@@ -25,7 +26,7 @@ const MyCards: FC<Props> = ({ cards, interactive = false, handleCard }) => {
                         i === 1 && 'z-10', i === 2 && 'z-20', i === 3 && 'z-30',
                         i === 4 && 'z-40', i === 5 && 'z-50',
                         i === 6 && 'z-[60]', i === 7 && 'z-[70]',
-                        i === 8 && 'z-[80]', i === 9 && 'z-[90]',)} key={card.id}><Card interactive={interactive} suit={card.suit} rank={card.rank} /></button>
+                        i === 8 && 'z-[80]', i === 9 && 'z-[90]',)} key={card.id}><Card interactive={interactive} active={active} suit={card.suit} rank={card.rank} /></button>
                 ))}
             </div>
         </div>

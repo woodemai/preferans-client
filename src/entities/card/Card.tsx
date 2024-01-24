@@ -7,10 +7,11 @@ interface Props {
     rank: Rank,
     suit: Suit,
     interactive?: boolean
+    active?: boolean
 
 }
 
-const Card: FC<Props> = ({ rank, suit, interactive = true }) => {
+const Card: FC<Props> = ({ rank, suit, interactive = true, active =true }) => {
 
     const resolvedSuit = resolveSuit(suit)
     const resolvedRank = resolveRank(rank)
@@ -20,7 +21,7 @@ const Card: FC<Props> = ({ rank, suit, interactive = true }) => {
     }, [suit])
 
     return (
-        <div className={cn("bg-white rounded-lg shadow-md h-[130px] w-[80px] p-2  transition-all duration-100 cursor-default", isSuitRed() && "text-rose-500", interactive ? "hover:-translate-y-4 cursor-pointer hover:z-[100] ": "bg-gray-200")}>
+        <div className={cn("bg-white rounded-lg shadow-md h-[130px] w-[80px] p-2  transition-all duration-100 cursor-default", isSuitRed() && "text-rose-500", interactive && "hover:-translate-y-4 cursor-pointer hover:z-[100]", !active && "bg-gray-200")}>
             <div className="w-full h-full ring-1 rounded-md ring-gray-300 relative flex justify-center items-center">
                 <div className="absolute top-2 left-2 flex justify-center flex-col items-center leading-4">
                     <div>{resolvedRank}</div>

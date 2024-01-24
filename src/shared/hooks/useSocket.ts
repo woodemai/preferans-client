@@ -6,6 +6,7 @@ import { GameInfo } from "@/entities/game/GameInfo";
 import { IBet } from "../helpers/getTradingChoices";
 import { MoveInfo } from "@/entities/game/MoveInfo";
 import { ICard } from "@/entities/card";
+import { authSlice } from "../store/reducers/AuthSlice";
 
 const BASE_URL = "http://localhost:8086";
 
@@ -13,14 +14,16 @@ export const useSocket = (gameId: string, playerId: string) => {
   const [socket, setSocket] = useState<undefined | Socket>();
 
   const dispatch = useAppDispatch();
-  const { handleGameInfo, handleAllReady, handleMoveInfo, handleNextTurn } =
+  const { handleGameInfo, handleAllReady, handleMoveInfo, handleNextTurn, handlePurchaseMove, handleBribeEnd } =
     gameSlice.actions;
+  const {handleSwitchReady} = authSlice.actions
 
   const switchReady = useCallback(() => {
     if (socket) {
       socket.emit("switch_ready");
+      dispatch(handleSwitchReady())
     }
-  }, [socket]);
+  }, [dispatch, handleSwitchReady, socket]);
 
   const handleChoice = useCallback(
     (choice: IBet) => {
@@ -34,11 +37,10 @@ export const useSocket = (gameId: string, playerId: string) => {
   const handleCard = useCallback(
     (card: ICard) => {
       if (socket) {
-        dispatch(handleNextTurn());
         socket.emit("send_card", card);
       }
     },
-    [dispatch, handleNextTurn, socket]
+    [socket]
   );
 
   useEffect(() => {
@@ -55,6 +57,14 @@ export const useSocket = (gameId: string, playerId: string) => {
     });
     s.on("move", (data: MoveInfo) => {
       dispatch(handleMoveInfo(data));
+      dispatch(handleNextTurn());
+    });
+    s.on("bribe_end", (winnerId: string) => {
+      dispatch(handleBribeEnd(winnerId))
+      dispatch(handlePurchaseMove())
+    });
+    s.on("move_purchase", () => {
+      dispatch(handlePurchaseMove())
     });
     s.on("all_ready", () => {
       dispatch(handleAllReady());
@@ -63,6 +73,6 @@ export const useSocket = (gameId: string, playerId: string) => {
     return () => {
       s.disconnect();
     };
-  }, [dispatch, gameId, handleAllReady, handleGameInfo, handleMoveInfo, handleNextTurn, playerId]);
+  }, [dispatch, gameId, handleAllReady, handleBribeEnd, handleGameInfo, handleMoveInfo, handleNextTurn, handlePurchaseMove, playerId]);
   return { switchReady, handleChoice, handleCard };
 };

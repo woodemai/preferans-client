@@ -19,7 +19,7 @@ const TableCards: FC<Props> = ({
                         i === 4 && 'z-40', i === 5 && 'z-50',
                         i === 6 && 'z-[60]', i === 7 && 'z-[70]',
                         i === 8 && 'z-[80]', i === 9 && 'z-[90]',)} key={card.id}>
-                <Card suit={card.suit} rank={card.rank} />
+                <Card suit={card.suit} rank={card.rank} interactive={false} active/>
             </div>
                 ))}
         </div>

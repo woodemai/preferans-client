@@ -1,18 +1,15 @@
-import { Button } from "@/shared/components/ui/button";
+import { Button, ButtonProps } from "@/shared/components/ui/button";
 import Spinner from "@/shared/components/ui/spinner";
-import { FC, ReactNode } from "react";
+import { cn } from "@/shared/lib/utils";
+import { FC } from "react";
 
-interface Props {
-    children: ReactNode,
-    loading: boolean,
-    onClick: () => void,
-    variant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link',
-    size?: 'default' | 'sm' | 'lg' | 'icon'
-}
-const LoadingButton: FC<Props> = ({ children, loading, onClick, variant, size }) => {
+interface Props extends ButtonProps {loading: boolean}
+
+
+const LoadingButton: FC<Props> = ({ children, loading, onClick, variant, size, className }) => {
 
     return (
-        <Button disabled={loading} type='button' onClick={onClick} variant={variant} size={size}>
+        <Button className={cn('transition-all duration-200', className)}   disabled={loading} type='button' onClick={onClick} variant={variant} size={size}>
             {loading
                 ? <Spinner />
                 : children

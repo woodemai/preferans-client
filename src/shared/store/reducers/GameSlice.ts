@@ -46,11 +46,25 @@ export const gameSlice = createSlice({
         return player;
       });
     },
+    handlePurchaseMove(state) {
+      const card = state.game.purchase.pop()
+      if (card) {
+        state.game.tableDeck.push(card)
+      }
+    },
     handleNextTurn(state) {
       state.game.currentPlayerIndex =
         state.game.currentPlayerIndex < 2
           ? state.game.currentPlayerIndex + 1
           : 0;
+    },
+    handleBribeEnd(state, { payload }: { payload: string }) {
+      for (const player of state.players) {
+        if (player.id == payload) {
+          player.score = player.score + 1
+        }
+      }
+      state.game.tableDeck = []
     },
   },
   extraReducers: (builder) => {

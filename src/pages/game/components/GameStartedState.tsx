@@ -7,6 +7,7 @@ import { useTurn } from "@/shared/hooks/useTurn";
 import MyCards from "@/widgets/MyCards";
 import PurchaseCards from "@/widgets/PurchaseCards";
 import RivalCards from "@/widgets/RivalCards";
+import { ScoreTable } from "@/widgets/ScoreTable";
 import TableCards from "@/widgets/TableCards";
 import TradingScreen from "@/widgets/TradingScreen";
 import { FC, useEffect, useState } from "react";
@@ -45,11 +46,12 @@ const GameStartedState: FC<Props> = ({
 
         return (
             <div className="w-full mt-20">
-                <MyCards handleCard={handleCard} interactive={turnToMove} cards={currentUser.cards} />
+                <MyCards handleCard={handleCard} interactive={turnToMove} active={turnToMove} cards={currentUser.cards} />
                 <RivalCards type="left" cards={leftRival.cards} />
                 <RivalCards type="right" cards={rightRival.cards} />
                 <PurchaseCards cards={purchaseCards} />
                 <TableCards cards={tableCards} />
+                <ScoreTable/>
                 {turnToBet && <TradingScreen handleChoice={handleChoice} />}
                 {turnToMove && "Ваш ход"}
             </div>
