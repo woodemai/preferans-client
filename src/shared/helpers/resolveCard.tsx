@@ -1,6 +1,6 @@
 import { Suit, Rank } from "@/entities/card";
 
-export const resolveSuit = (suit?: Suit | "БК") => {
+export const resolveSuit = (suit?: Suit | "NT") => {
   switch (suit) {
     case Suit.HEARTS:
       return <>♥</>;
@@ -10,7 +10,7 @@ export const resolveSuit = (suit?: Suit | "БК") => {
       return <>♣</>;
     case Suit.SPADES:
       return <>♠</>;
-    case "БК":
+    case "NT":
       return <>БК</>;
     default:
       return <>{suit}</>

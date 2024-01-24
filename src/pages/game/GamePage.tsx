@@ -23,7 +23,7 @@ const GamePage = () => {
             <GameLoadingState isLoading={isLoading} />
             <GameErrorState id={id} game={game} />
             <GameCreatedState state={game.state} isLoading={isLoading} isReady={user.ready} switchReady={switchReady} />
-            <GameStartedState state={game.state} userId={user.id} players={players} gameCards={game.cards} handleChoice={handleChoice} handleCard={handleCard} />
+            <GameStartedState tableCards={game.tableDeck} state={game.state} userId={user.id} players={players} purchaseCards={game.purchase} handleChoice={handleChoice} handleCard={handleCard} />
         </>
     )
 }
