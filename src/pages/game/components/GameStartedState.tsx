@@ -4,44 +4,54 @@ import { IUser } from "@/entities/user";
 import { IBet } from "@/shared/helpers/getTradingChoices";
 import useGetUserRivals from "@/shared/hooks/useGetUserRivals";
 import { useTurn } from "@/shared/hooks/useTurn";
-import GameCards from "@/widgets/GameCards";
 import MyCards from "@/widgets/MyCards";
+import PurchaseCards from "@/widgets/PurchaseCards";
 import RivalCards from "@/widgets/RivalCards";
+import TableCards from "@/widgets/TableCards";
 import TradingScreen from "@/widgets/TradingScreen";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 
 interface Props {
     userId: string,
     state: GameState,
     players: IUser[]
-    gameCards: ICard[]
+    purchaseCards: ICard[]
+    tableCards: ICard[]
     handleChoice: (choice: IBet) => void
-    handleCard: (card:ICard) => void
+    handleCard: (card: ICard) => void
 }
 
 const GameStartedState: FC<Props> = ({
     userId,
     state,
     players,
-    gameCards,
+    purchaseCards,
+    tableCards,
     handleChoice,
     handleCard
 }) => {
 
     const { currentUser, leftRival, rightRival } = useGetUserRivals(userId, players);
     const { isTurn } = useTurn();
+    const [turnToBet, setTurnToBet] = useState(false)
+    const [turnToMove, setTurnToMove] = useState(false)
+
+    useEffect(() => {
+        setTurnToBet(state === GameState.TRADING && isTurn)
+        setTurnToMove(state ===GameState.GAMEPLAY && isTurn)
+    }, [isTurn, state])
 
     if (state !== GameState.CREATED && currentUser && leftRival && rightRival) {
 
         return (
             <div className="w-full mt-20">
-                <MyCards handleCard={handleCard} interactive={state === GameState.GAMEPLAY && isTurn} cards={currentUser.cards} />
+                <MyCards handleCard={handleCard} interactive={turnToMove} cards={currentUser.cards} />
                 <RivalCards type="left" cards={leftRival.cards} />
-                <RivalCards type="right" cards={rightRival.cards}/>
-                <GameCards cards={gameCards} />
-                {state === GameState.TRADING && isTurn && <TradingScreen handleChoice={handleChoice} />}
-                {state === GameState.GAMEPLAY && isTurn && "Ваш ход"}
-                
+                <RivalCards type="right" cards={rightRival.cards} />
+                <PurchaseCards cards={purchaseCards} />
+                <TableCards cards={tableCards} />
+                {turnToBet && <TradingScreen handleChoice={handleChoice} />}
+                {turnToMove && "Ваш ход"}
             </div>
         )
     }

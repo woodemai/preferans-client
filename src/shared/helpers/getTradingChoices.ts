@@ -8,7 +8,7 @@ export enum BetType {
 export interface IBet {
   type: BetType
   value?: number;
-  suit?: Suit | "БК";
+  suit?: Suit | "NT";
 }
 
 export const getChoices = (): IBet[] => {
@@ -24,7 +24,7 @@ export const getChoices = (): IBet[] => {
     choices.push({
       type: BetType.VALUE,
       value: i,
-      suit: "БК",
+      suit: "NT",
     });
   }
   return choices;

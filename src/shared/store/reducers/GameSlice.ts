@@ -36,7 +36,7 @@ export const gameSlice = createSlice({
       state.isLoading = true;
     },
     handleMoveInfo(state, { payload }: { payload: MoveInfo }) {
-      state.game.cards.push(payload.card);
+      state.game.tableDeck.push(payload.card);
       state.players = state.players.map((player) => {
         if (player.id === payload.playerId) {
           player.cards = player.cards.filter(
@@ -45,6 +45,12 @@ export const gameSlice = createSlice({
         }
         return player;
       });
+    },
+    handleNextTurn(state) {
+      state.game.currentPlayerIndex =
+        state.game.currentPlayerIndex < 2
+          ? state.game.currentPlayerIndex + 1
+          : 0;
     },
   },
   extraReducers: (builder) => {

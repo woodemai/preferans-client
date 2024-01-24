@@ -4,7 +4,7 @@ import { resolveSuit } from "@/shared/helpers/resolveCard";
 import { cn } from "@/shared/lib/utils";
 
 const choices = getChoices()
-const isSuitRed = (suit?: Suit | "БК") => {
+const isSuitRed = (suit?: Suit | "NT") => {
     if (!suit) return false;
     return suit === Suit.HEARTS || suit === Suit.DIAMONDS
 }

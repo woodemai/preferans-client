@@ -13,7 +13,8 @@ export const useSocket = (gameId: string, playerId: string) => {
   const [socket, setSocket] = useState<undefined | Socket>();
 
   const dispatch = useAppDispatch();
-  const { handleGameInfo, handleAllReady, handleMoveInfo } = gameSlice.actions;
+  const { handleGameInfo, handleAllReady, handleMoveInfo, handleNextTurn } =
+    gameSlice.actions;
 
   const switchReady = useCallback(() => {
     if (socket) {
@@ -21,19 +22,23 @@ export const useSocket = (gameId: string, playerId: string) => {
     }
   }, [socket]);
 
-  const handleChoice = useCallback((choice:IBet) => {
-    if (socket) {
-      socket.emit("send_bet", choice);
-    }
-  }, [socket]);
+  const handleChoice = useCallback(
+    (choice: IBet) => {
+      if (socket) {
+        socket.emit("send_bet", choice);
+      }
+    },
+    [socket]
+  );
 
   const handleCard = useCallback(
     (card: ICard) => {
       if (socket) {
+        dispatch(handleNextTurn());
         socket.emit("send_card", card);
       }
     },
-    [socket]
+    [dispatch, handleNextTurn, socket]
   );
 
   useEffect(() => {
@@ -43,20 +48,21 @@ export const useSocket = (gameId: string, playerId: string) => {
     setSocket(s);
 
     s.on("info", (data: GameInfo) => {
-      dispatch(handleGameInfo(data))
-      
-    })
+      dispatch(handleGameInfo(data));
+    });
+    s.on("next_turn", () => {
+      dispatch(handleNextTurn());
+    });
     s.on("move", (data: MoveInfo) => {
       dispatch(handleMoveInfo(data));
     });
     s.on("all_ready", () => {
       dispatch(handleAllReady());
     });
- 
 
     return () => {
       s.disconnect();
     };
-  }, [dispatch, gameId, handleAllReady, handleGameInfo, handleMoveInfo, playerId]);
+  }, [dispatch, gameId, handleAllReady, handleGameInfo, handleMoveInfo, handleNextTurn, playerId]);
   return { switchReady, handleChoice, handleCard };
 };

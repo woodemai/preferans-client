@@ -1,10 +1,11 @@
 import { ICard } from "../card"
 import { GameState } from "./GameState"
 
-export type IGame = {
-    id: string,
-    state: GameState,
-    size: number
-    cards: ICard[]
-    currentPlayerIndex: number
+export interface IGame {
+  id: string,
+  state: GameState,
+  size: number,
+  purchase: ICard[],
+  tableDeck: ICard[],
+  currentPlayerIndex: number,
 }
