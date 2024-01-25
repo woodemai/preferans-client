@@ -8,7 +8,8 @@ export const BulletTable = () => {
                     <TableHead>Игрок</TableHead>
                     <TableHead>Пуля</TableHead>
                     <TableHead>Гора</TableHead>
-                    <TableHead>Висты</TableHead>
+                    <TableHead>Вист левый</TableHead>
+                    <TableHead>Виста правый</TableHead>
                 </TableRow>
             </TableHeader>
         </Table>

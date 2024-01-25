@@ -3,13 +3,14 @@ import NavItem from "./NavItem";
 import { useAppSelector } from "@/shared/store/hooks";
 import { Button } from "@/shared/components/ui/button";
 import { useEffect, useState } from "react";
+import { authApi } from "@/shared/store/services/AuthService";
 interface Link {
     label: string,
     link: string
 }
-const initialLinks:Link[] = [
+const initialLinks: Link[] = [
     {
-        label: "Home",
+        label: "Главная",
         link: "/"
     },
 
@@ -18,23 +19,25 @@ const initialLinks:Link[] = [
 const Header = () => {
     const [links, setLinks] = useState<Link[]>(initialLinks)
     const { isAuth } = useAppSelector(state => state.authReducer)
-    
+    const [handleLogout] = authApi.useLogoutMutation()
+
     useEffect(() => {
         if (!isAuth) {
-            setLinks([...initialLinks, {label: 'Auth', link:'/auth'}])
-        }else {
-            setLinks(initialLinks)
+            setLinks([...initialLinks, { label: 'Войти', link: '/auth' }])
+        } else {
+            setLinks([...initialLinks, {label: 'Профиль', link: '/profile'}])
         }
     }, [isAuth])
+    
     return (
         <header className="bg-card shadow-sm flex justify-between items-center p-4 border-b w-full">
             <div className="flex flex-row gap-4">
                 <Logo />
-                <h1 className="text-3xl font-bold">Preferans</h1>
+                <h1 className="text-3xl font-bold">Преферанс</h1>
             </div>
             <nav>
                 {links.map(link => <NavItem key={link.label} link={link.link} label={link.label} />)}
-                {isAuth && <Button variant={'link'}>Logout</Button>}
+                {isAuth && <Button onClick={() => handleLogout()} variant={'link'}>Выйти</Button>}
             </nav>
         </header>
     )
