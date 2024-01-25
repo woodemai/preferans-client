@@ -1,18 +1,18 @@
-import { IGame } from "@/entities/game";
+import { GameState, IGame } from "@/entities/game";
 import { createSlice } from "@reduxjs/toolkit";
 import { gameApi } from "../services/GameService";
 import { IUser } from "@/entities/user";
 import { GameInfo } from "@/entities/game/GameInfo";
 import { MoveInfo } from "@/entities/game/MoveInfo";
 
-type GameState = {
+type GameSliceState = {
   isLoading: boolean;
   error: string | number | undefined;
 
   game: IGame;
   players: IUser[];
 };
-const initialState: GameState = {
+const initialState: GameSliceState = {
   isLoading: false,
   error: undefined,
 
@@ -36,6 +36,9 @@ export const gameSlice = createSlice({
       state.isLoading = true;
     },
     handleMoveInfo(state, { payload }: { payload: MoveInfo }) {
+      if (!state.game.bribeWinnerCard) {
+        state.game.bribeWinnerCard = payload.card
+      }
       state.game.tableDeck.push(payload.card);
       state.players = state.players.map((player) => {
         if (player.id === payload.playerId) {
@@ -50,6 +53,7 @@ export const gameSlice = createSlice({
       const card = state.game.purchase.pop()
       if (card) {
         state.game.tableDeck.push(card)
+        state.game.bribeWinnerCard = card;
       }
     },
     handleNextTurn(state) {
@@ -65,6 +69,17 @@ export const gameSlice = createSlice({
         }
       }
       state.game.tableDeck = []
+      state.game.bribeWinnerCard = null
+    },
+    handleChangeState(state, { payload }: { payload: GameState }) {
+      state.game.state = payload;
+    },
+    handleReady(state, {payload}:{payload:string}) {
+      for (const player of state.players) {
+        if (player.id == payload) {
+          player.ready = !player.ready
+        }
+      }
     },
   },
   extraReducers: (builder) => {

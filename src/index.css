@@ -70,6 +70,24 @@
   * {
     @apply border-border;
   }
+  h1 {
+    @apply tracking-tight font-bold text-5xl;
+  }
+  h2 {
+    @apply tracking-tight font-bold text-4xl;
+  }
+  h3 {
+    @apply tracking-tight font-bold text-3xl;
+  }
+  h4 {
+    @apply tracking-tight font-semibold text-2xl;
+  }
+  h5 {
+    @apply tracking-tight font-semibold text-xl;
+  }
+  h6 {
+    @apply tracking-tighter font-semibold text-lg;
+  }
   body {
     @apply bg-background text-foreground;
   }

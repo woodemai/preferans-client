@@ -7,6 +7,7 @@ import { IBet } from "../helpers/getTradingChoices";
 import { MoveInfo } from "@/entities/game/MoveInfo";
 import { ICard } from "@/entities/card";
 import { authSlice } from "../store/reducers/AuthSlice";
+import { GameState } from "@/entities/game";
 
 const BASE_URL = "http://localhost:8086";
 
@@ -14,7 +15,7 @@ export const useSocket = (gameId: string, playerId: string) => {
   const [socket, setSocket] = useState<undefined | Socket>();
 
   const dispatch = useAppDispatch();
-  const { handleGameInfo, handleAllReady, handleMoveInfo, handleNextTurn, handlePurchaseMove, handleBribeEnd } =
+  const { handleGameInfo, handleAllReady, handleMoveInfo, handleNextTurn, handlePurchaseMove, handleBribeEnd,handleChangeState, handleReady } =
     gameSlice.actions;
   const {handleSwitchReady} = authSlice.actions
 
@@ -49,14 +50,20 @@ export const useSocket = (gameId: string, playerId: string) => {
     });
     setSocket(s);
 
-    s.on("info", (data: GameInfo) => {
-      dispatch(handleGameInfo(data));
+    s.on("info", (info: GameInfo) => {
+      dispatch(handleGameInfo(info));
     });
     s.on("next_turn", () => {
       dispatch(handleNextTurn());
     });
-    s.on("move", (data: MoveInfo) => {
-      dispatch(handleMoveInfo(data));
+    s.on("handle_state", (state: GameState) => {
+      dispatch(handleChangeState(state));
+    });
+    s.on("handle_ready", (playerId: string) => {
+      dispatch(handleReady(playerId));
+    });
+    s.on("move", (info: MoveInfo) => {
+      dispatch(handleMoveInfo(info));
       dispatch(handleNextTurn());
     });
     s.on("bribe_end", (winnerId: string) => {
@@ -73,6 +80,6 @@ export const useSocket = (gameId: string, playerId: string) => {
     return () => {
       s.disconnect();
     };
-  }, [dispatch, gameId, handleAllReady, handleBribeEnd, handleGameInfo, handleMoveInfo, handleNextTurn, handlePurchaseMove, playerId]);
+  }, [dispatch, gameId, handleAllReady, handleBribeEnd, handleChangeState, handleGameInfo, handleMoveInfo, handleNextTurn, handlePurchaseMove, handleReady, playerId]);
   return { switchReady, handleChoice, handleCard };
 };

@@ -7,5 +7,6 @@ export interface IGame {
   size: number,
   purchase: ICard[],
   tableDeck: ICard[],
+  bribeWinnerCard: ICard | null,
   currentPlayerIndex: number,
 }
