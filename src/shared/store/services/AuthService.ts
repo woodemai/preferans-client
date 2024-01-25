@@ -32,7 +32,7 @@ export const authApi = createApi({
             query: () => ({
                 url: "/logout",
                 credentials: "include",
-                method: "POST",
+                method: "DELETE",
                 headers: { Authorization: `Bearer ${token}` },
             }),
             invalidatesTags: ['Auth']

@@ -5,6 +5,7 @@ import AuthPage from "@/pages/auth";
 import Spinner from "@/shared/components/ui/spinner";
 import GamePage from "@/pages/game/GamePage";
 import Page from "@/pages/unauth/Page";
+import ProfilePage from "@/pages/profile/ProfilePage";
 
 const router = createBrowserRouter([
     {
@@ -22,6 +23,11 @@ const router = createBrowserRouter([
             {
                 path: "/",
                 element: <HomePage />,
+                loader: () => <Spinner/>
+            },
+            {
+                path: '/profile',
+                element: <ProfilePage/>,
                 loader: () => <Spinner/>
             },
             {

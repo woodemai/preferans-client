@@ -20,7 +20,7 @@ const GameCard:FC<Props> = ({game}) => {
   }
 
   return (
-    <button type='button'  onClick={handleConnect} className='font-semibold hover:bg-accent transition-all duration-300 bg-card p-4 rounded-md shadow-sm'>{`Number of players: ${game.size}`}</button>
+    <button type='button'  onClick={handleConnect} className='font-semibold hover:bg-accent transition-all duration-300 bg-card p-4 rounded-md shadow-sm'>{`Количество игроков: ${game.size}`}</button>
   )
 }
 
