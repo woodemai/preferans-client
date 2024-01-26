@@ -15,8 +15,17 @@ export const useSocket = (gameId: string, playerId: string) => {
   const [socket, setSocket] = useState<undefined | Socket>();
 
   const dispatch = useAppDispatch();
-  const { handleGameInfo, handleAllReady, handleMoveInfo, handleNextTurn, handlePurchaseMove, handleBribeEnd,handleChangeState, handleReady } =
-    gameSlice.actions;
+  const {
+    handleGameInfo,
+    handleAllReady,
+    handleMoveInfo,
+    handleNextTurn,
+    handlePurchaseMove,
+    handleBribeEnd,
+    handleChangeState,
+    handleReady,
+    handleWin,
+  } = gameSlice.actions;
   const {handleSwitchReady} = authSlice.actions
 
   const switchReady = useCallback(() => {
@@ -73,6 +82,9 @@ export const useSocket = (gameId: string, playerId: string) => {
     s.on("move_purchase", () => {
       dispatch(handlePurchaseMove())
     });
+    s.on("handle_win", (winnerId: string) => {
+      dispatch(handleWin(winnerId));
+    });
     s.on("all_ready", () => {
       dispatch(handleAllReady());
     });
@@ -80,6 +92,6 @@ export const useSocket = (gameId: string, playerId: string) => {
     return () => {
       s.disconnect();
     };
-  }, [dispatch, gameId, handleAllReady, handleBribeEnd, handleChangeState, handleGameInfo, handleMoveInfo, handleNextTurn, handlePurchaseMove, handleReady, playerId]);
+  }, [dispatch, gameId, handleAllReady, handleBribeEnd, handleChangeState, handleGameInfo, handleMoveInfo, handleNextTurn, handlePurchaseMove, handleReady, handleWin, playerId]);
   return { switchReady, handleChoice, handleCard };
 };

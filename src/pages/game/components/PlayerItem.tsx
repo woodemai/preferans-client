@@ -11,7 +11,7 @@ const PlayerItem: FC<Props> = memo(({ player }) => {
     return (
         <div className='p-4 bg-card rounded-md shadow-md w-full'>
             <div className='flex justify-between items-center'>
-                <h4>{player.name}</h4>
+                <h5>{player.name}</h5>
                 <Ready ready={player.ready} />
             </div>
         </div>

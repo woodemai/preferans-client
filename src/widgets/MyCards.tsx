@@ -62,7 +62,7 @@ const MyCards: FC<Props> = ({ cards:initialCards, interactive = false, active = 
     }, [handleSetSuit]);
 
     const handleClick = (card: ICard) => {
-        if (interactive) {
+        if (handleInteractive(card)) {
             handleCard(card)
         }
     }
