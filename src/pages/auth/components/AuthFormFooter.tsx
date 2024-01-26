@@ -9,9 +9,9 @@ type Props = {
 
 const AuthFormFooter: FC<Props> = ({ formState, setFormState }) => {
     if (formState === AuthFormState.LOGIN) {
-        return <span className='text-gray-700 text-sm'>Don't have an accout?<Button variant='link' onClick={setFormState}>Create</Button></span>
+        return <span className='text-gray-700 text-sm'>Нет аккаунта?<Button variant='link' onClick={setFormState}>Создать</Button></span>
     } else {
-        return <span className='text-gray-700 text-sm'>Already have an accout?<Button variant='link' onClick={setFormState}>Login</Button></span>
+        return <span className='text-gray-700 text-sm'>Есть аккаунт?<Button variant='link' onClick={setFormState}>Войти</Button></span>
     }
 }
 

@@ -35,9 +35,17 @@ export const gameSlice = createSlice({
     handleAllReady(state) {
       state.isLoading = true;
     },
+    handleWin(state, { payload }: { payload: string }) {
+      for(const player of state.players) {
+        if(player.id === payload) {
+          player.cards = player.cards.concat(state.game.purchase)
+          state.game.purchase = []
+        }
+      }
+    },
     handleMoveInfo(state, { payload }: { payload: MoveInfo }) {
       if (!state.game.bribeWinnerCard) {
-        state.game.bribeWinnerCard = payload.card
+        state.game.bribeWinnerCard = payload.card;
       }
       state.game.tableDeck.push(payload.card);
       state.players = state.players.map((player) => {
@@ -50,9 +58,9 @@ export const gameSlice = createSlice({
       });
     },
     handlePurchaseMove(state) {
-      const card = state.game.purchase.pop()
+      const card = state.game.purchase.pop();
       if (card) {
-        state.game.tableDeck.push(card)
+        state.game.tableDeck.push(card);
         state.game.bribeWinnerCard = card;
       }
     },
@@ -65,19 +73,19 @@ export const gameSlice = createSlice({
     handleBribeEnd(state, { payload }: { payload: string }) {
       for (const player of state.players) {
         if (player.id == payload) {
-          player.score = player.score + 1
+          player.score = player.score + 1;
         }
       }
-      state.game.tableDeck = []
-      state.game.bribeWinnerCard = null
+      state.game.tableDeck = [];
+      state.game.bribeWinnerCard = null;
     },
     handleChangeState(state, { payload }: { payload: GameState }) {
       state.game.state = payload;
     },
-    handleReady(state, {payload}:{payload:string}) {
+    handleReady(state, { payload }: { payload: string }) {
       for (const player of state.players) {
         if (player.id == payload) {
-          player.ready = !player.ready
+          player.ready = !player.ready;
         }
       }
     },

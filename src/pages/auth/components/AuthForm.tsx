@@ -51,7 +51,7 @@ const AuthForm = () => {
                     <FormField control={form.control} name="email"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Email</FormLabel>
+                                <FormLabel>Почта</FormLabel>
                                 <FormControl>
                                     <Input disabled={isLoading} autoComplete="username" placeholder="email@mail.com" {...field} />
                                 </FormControl>
@@ -62,7 +62,7 @@ const AuthForm = () => {
                     <FormField control={form.control} name="password"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Password</FormLabel>
+                                <FormLabel>Пароль</FormLabel>
                                 <FormControl>
                                     <Input disabled={isLoading} autoComplete="password" type="password" {...field} />
                                 </FormControl>
@@ -74,9 +74,9 @@ const AuthForm = () => {
                         <FormField control={form.control} name="name"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Name</FormLabel>
+                                    <FormLabel>Имя</FormLabel>
                                     <FormControl>
-                                        <Input disabled={isLoading} autoComplete="name" placeholder="Nikolay" {...field} />
+                                        <Input disabled={isLoading} autoComplete="name" placeholder="Николай" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>

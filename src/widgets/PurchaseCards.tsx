@@ -1,17 +1,16 @@
 import { ICard, Card } from "@/entities/card";
 import CardShirt from "@/entities/card/CardShirt";
 import { cn } from "@/shared/lib/utils";
-import { FC, useState } from "react";
+import { FC } from "react";
 
 interface Props {
     cards: ICard[]
-    isOpen?: boolean
+    open?: boolean
 }
 
-const GameCards: FC<Props> = ({ cards, isOpen = false }) => {
-    const [open, setOpen] = useState(isOpen)
+const GameCards: FC<Props> = ({ cards, open = false }) => {
     return (
-        <button onClick={() => setOpen(!open)} className="relative top-0 left-[50%] translate-x-[-50%] translate-y-[-50%] max-w-fit">
+        <button className="relative top-0 left-[50%] translate-x-[-50%] translate-y-[-50%] max-w-fit">
             <div className={cn(` grid grid-cols-2 max-w-[18rem] sm:max-w-md md:max-w-lg lg:max-w-xl transition-all duration-300`)}>
                 {cards.map((card, i) => (
                     <div className={cn(i === 0 && 'z-0',

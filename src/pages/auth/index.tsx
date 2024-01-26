@@ -18,7 +18,7 @@ const AuthPage = () => {
   return (
     <div className="w-full h-screen flex flex-col gap-y-8 justify-center items-center">
       <Logo/>
-      <h1 className="text-3xl font-bold">Preferans the Game</h1>
+      <h1 className="text-3xl font-bold">Преферанс Онлайн</h1>
       <AuthForm />
     </div>
   )
