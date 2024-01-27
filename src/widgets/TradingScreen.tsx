@@ -1,5 +1,6 @@
+import { IBet, BetType } from "@/entities/bet";
 import { TradingScreenItem } from "@/features/TradingScreenItem";
-import { BetType, IBet, getChoices } from "@/shared/helpers/getTradingChoices"
+import { getChoices } from "@/shared/helpers/getTradingChoices";
 
 const choices = getChoices()
 
@@ -14,7 +15,7 @@ const TradingScreen = ({ handleChoice }: { handleChoice: (choice: IBet) => void 
                     {choices.map((choice, i) => <TradingScreenItem handleChoice={handleChoice} choice={choice} key={i} />)}
                 </div>
                 <div className="flex justify-evenly w-full">
-                    <TradingScreenItem handleChoice={handleChoice} choice={{ type: BetType.MIZER }} />
+                    <TradingScreenItem handleChoice={handleChoice} choice={{type: BetType.MIZER}} />
                     <TradingScreenItem handleChoice={handleChoice} choice={{ type: BetType.PASS }} />
                 </div>
             </div>

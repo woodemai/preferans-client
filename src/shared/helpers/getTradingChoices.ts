@@ -1,15 +1,5 @@
+import { IBet, BetType, SuitNT } from "@/entities/bet";
 import { Suit } from "@/entities/card";
-
-export enum BetType {
-  VALUE ="VALUE",
-  MIZER = "MIZER",
-  PASS = "PASS"
-}
-export interface IBet {
-  type: BetType
-  value?: number;
-  suit?: Suit | "NT";
-}
 
 export const getChoices = (): IBet[] => {
   const choices: IBet[] = [];
@@ -18,13 +8,13 @@ export const getChoices = (): IBet[] => {
       choices.push({
         type: BetType.VALUE,
         value: i,
-        suit
+        suit,
       });
     });
     choices.push({
       type: BetType.VALUE,
       value: i,
-      suit: "NT",
+      suit: SuitNT.NT,
     });
   }
   return choices;

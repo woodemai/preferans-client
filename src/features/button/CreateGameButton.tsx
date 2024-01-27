@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import LoadingButton from "./LoadingButton";
 import { useEffect } from "react";
 
+
 const CreateGameButton = () => {
     const { user } = useAppSelector(state => state.authReducer);
     const [create, { data, isLoading }] = gameApi.useCreateGameMutation()
@@ -15,7 +16,7 @@ const CreateGameButton = () => {
         }
     }, [data, navigate])
     
-    if (user) {
+    if (user.id) {
         const handleCreate = async () => {
             await create(user.id)
         }

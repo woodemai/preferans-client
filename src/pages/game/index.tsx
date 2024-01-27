@@ -9,7 +9,7 @@ import GameLoadingState from "./components/GameLoadingState"
 
 
 
-const GamePage = () => {
+export const GamePage = () => {
 
 
     const { id } = useParams()
@@ -28,4 +28,3 @@ const GamePage = () => {
     )
 }
 
-export default GamePage

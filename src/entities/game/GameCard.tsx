@@ -9,7 +9,7 @@ type Props = {
 
 
 
-const GameCard:FC<Props> = ({game}) => {
+export const GameCard:FC<Props> = ({game}) => {
   const {user} = useAppSelector(state => state.authReducer)
   const navigate = useNavigate()
 
@@ -23,5 +23,3 @@ const GameCard:FC<Props> = ({game}) => {
     <button type='button'  onClick={handleConnect} className='font-semibold hover:bg-accent transition-all duration-300 bg-card p-4 rounded-md shadow-sm'>{`Количество игроков: ${game.size}`}</button>
   )
 }
-
-export default GameCard

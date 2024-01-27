@@ -2,7 +2,7 @@ import { Button } from "@/shared/components/ui/button";
 import { AlertTriangle } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const Page = () => {
+export const Unauth = () => {
 
     return (
         <div className="w-full h-screen flex justify-center items-center">
@@ -17,5 +17,3 @@ const Page = () => {
         </div>
     )
 }
-
-export default Page;

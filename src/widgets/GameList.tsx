@@ -1,9 +1,9 @@
-import {GameCard} from "@/entities/game"
+import { GameCard } from "@/entities/game"
 import Spinner from "@/shared/components/ui/spinner"
 import { gameApi } from "@/shared/store/services/GameService"
 
 const GameList = () => {
-  const { data: games, isLoading, error } = gameApi.useGetAllGamesQuery()
+  const { data: games, isLoading, error } = gameApi.useGetAllGamesQuery({ pageNumber: 0, pageSize: 5 }, { pollingInterval: 1000 })
 
   if (error) {
     return <div>Error!</div>

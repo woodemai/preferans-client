@@ -2,7 +2,7 @@ import { Button } from "@/shared/components/ui/button";
 import { useAppSelector } from "@/shared/store/hooks";
 import { authApi } from "@/shared/store/services/AuthService";
 
-const ProfilePage = () => {
+export const ProfilePage = () => {
 
     const {name, email} = useAppSelector(state => state.authReducer.user)
     const [handleLogout] = authApi.useLogoutMutation()
@@ -29,4 +29,3 @@ const ProfilePage = () => {
     )
 }
 
-export default ProfilePage;

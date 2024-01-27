@@ -9,7 +9,7 @@ interface Props {
     isOpen?: boolean
 }
 
-const RivalCards: FC<Props> = ({ cards, type, isOpen = false }) => {
+const RivalCards: FC<Props> = ({ cards = [], type, isOpen = false }) => {
     if (cards) {
         return (
             <div className={cn("absolute top-[40%] translate-y-[-50%]", type === 'left' ? 'left-0' : 'mt-24 right-0')}>

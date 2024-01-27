@@ -2,7 +2,7 @@ import logoUrl from '/logo.svg';
 const Logo = () => {
 
     return (
-        <img src={logoUrl} alt="logo" />
+        <img width={30} height={30} src={logoUrl} alt="logo" />
     )
 }
 

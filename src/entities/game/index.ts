@@ -1,7 +1,5 @@
-import GameCard from "./GameCard";
-import { IGame } from "./Game";
-import { GameState } from "./GameState";
-import { GameInfo } from "./GameInfo";
-
-export { GameState, GameCard };
-export type { IGame, GameInfo };
+export * from './Game';
+export * from './GameCard';
+export * from "./GameInfo";
+export * from "./GameState";
+export * from "./MoveInfo";

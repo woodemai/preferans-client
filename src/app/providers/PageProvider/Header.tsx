@@ -2,7 +2,7 @@ import Logo from "@/shared/components/Logo";
 import NavItem from "./NavItem";
 import { useAppSelector } from "@/shared/store/hooks";
 import { Button } from "@/shared/components/ui/button";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { authApi } from "@/shared/store/services/AuthService";
 interface Link {
     label: string,
@@ -16,7 +16,7 @@ const initialLinks: Link[] = [
 
 ]
 
-const Header = () => {
+const Header = memo(() => {
     const [links, setLinks] = useState<Link[]>(initialLinks)
     const { isAuth } = useAppSelector(state => state.authReducer)
     const [handleLogout] = authApi.useLogoutMutation()
@@ -35,12 +35,12 @@ const Header = () => {
                 <Logo />
                 <h1 className="text-3xl font-bold">Преферанс</h1>
             </div>
-            <nav>
+            <nav >
                 {links.map(link => <NavItem key={link.label} link={link.link} label={link.label} />)}
                 {isAuth && <Button onClick={() => handleLogout()} variant={'link'}>Выйти</Button>}
             </nav>
         </header>
     )
-}
+})
 
 export default Header   
