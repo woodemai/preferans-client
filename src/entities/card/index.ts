@@ -1,7 +1,5 @@
-import { Rank } from "./Rank";
-import { Suit } from "./Suit";
-import { ICard } from "./ICard";
-import Card from "./Card";
-
-export { Rank, Suit, Card };
-export type { ICard };
+export * from "./Card";
+export * from "./CardShirt";
+export * from "./ICard";
+export * from "./Rank";
+export * from "./Suit";

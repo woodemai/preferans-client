@@ -1,12 +1,12 @@
 import { Button, ButtonProps } from "@/shared/components/ui/button";
 import Spinner from "@/shared/components/ui/spinner";
 import { cn } from "@/shared/lib/utils";
-import { FC } from "react";
+import { FC, memo } from "react";
 
 interface Props extends ButtonProps {loading: boolean}
 
 
-const LoadingButton: FC<Props> = ({ children, loading, onClick, variant, size, className }) => {
+const LoadingButton: FC<Props> = memo(({ children, loading, onClick, variant, size, className }) => {
 
     return (
         <Button className={cn('transition-all duration-200', className)}   disabled={loading} type='button' onClick={onClick} variant={variant} size={size}>
@@ -16,6 +16,6 @@ const LoadingButton: FC<Props> = ({ children, loading, onClick, variant, size, c
             }
         </Button>
     )
-}
+})
 
 export default LoadingButton;

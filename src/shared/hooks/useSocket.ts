@@ -1,13 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import { Socket, io } from "socket.io-client";
-import { useAppDispatch } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { gameSlice } from "../store/reducers/GameSlice";
-import { GameInfo } from "@/entities/game/GameInfo";
 import { IBet } from "../helpers/getTradingChoices";
-import { MoveInfo } from "@/entities/game/MoveInfo";
-import { ICard } from "@/entities/card";
 import { authSlice } from "../store/reducers/AuthSlice";
-import { GameState } from "@/entities/game";
+import { ICard } from "@/entities/card";
+import { GameState, GameInfo, MoveInfo } from "@/entities/game";
 
 const BASE_URL = "http://localhost:8086";
 
@@ -15,6 +13,7 @@ export const useSocket = (gameId: string, playerId: string) => {
   const [socket, setSocket] = useState<undefined | Socket>();
 
   const dispatch = useAppDispatch();
+
   const {
     handleGameInfo,
     handleAllReady,
@@ -25,13 +24,17 @@ export const useSocket = (gameId: string, playerId: string) => {
     handleChangeState,
     handleReady,
     handleWin,
+    handleDrop,
   } = gameSlice.actions;
-  const {handleSwitchReady} = authSlice.actions
+
+  const { handleSwitchReady, handleDisconnect } = authSlice.actions;
+
+  const { game } = useAppSelector((state) => state.gameReducer);
 
   const switchReady = useCallback(() => {
     if (socket) {
       socket.emit("switch_ready");
-      dispatch(handleSwitchReady())
+      dispatch(handleSwitchReady());
     }
   }, [dispatch, handleSwitchReady, socket]);
 
@@ -47,15 +50,20 @@ export const useSocket = (gameId: string, playerId: string) => {
   const handleCard = useCallback(
     (card: ICard) => {
       if (socket) {
-        socket.emit("send_card", card);
+        if (game.state === GameState.GAMEPLAY) {
+          socket.emit("send_card", card);
+        } else if (game.state === GameState.DROPPING) {
+          socket.emit("send_drop", card);
+        }
       }
     },
-    [socket]
+    [game.state, socket]
   );
 
   useEffect(() => {
     const s = io(BASE_URL, {
       query: { gameId: gameId, playerId: playerId },
+      withCredentials: true,
     });
     setSocket(s);
 
@@ -75,12 +83,15 @@ export const useSocket = (gameId: string, playerId: string) => {
       dispatch(handleMoveInfo(info));
       dispatch(handleNextTurn());
     });
+    s.on("drop", (playerId:string, card:ICard) => {
+      dispatch(handleDrop({playerId, card}));
+    });
     s.on("bribe_end", (winnerId: string) => {
-      dispatch(handleBribeEnd(winnerId))
-      dispatch(handlePurchaseMove())
+      dispatch(handleBribeEnd(winnerId));
+      dispatch(handlePurchaseMove());
     });
     s.on("move_purchase", () => {
-      dispatch(handlePurchaseMove())
+      dispatch(handlePurchaseMove());
     });
     s.on("handle_win", (winnerId: string) => {
       dispatch(handleWin(winnerId));
@@ -91,7 +102,8 @@ export const useSocket = (gameId: string, playerId: string) => {
 
     return () => {
       s.disconnect();
+      dispatch(handleDisconnect());
     };
-  }, [dispatch, gameId, handleAllReady, handleBribeEnd, handleChangeState, handleGameInfo, handleMoveInfo, handleNextTurn, handlePurchaseMove, handleReady, handleWin, playerId]);
+  }, [dispatch, gameId, handleAllReady, handleBribeEnd, handleChangeState, handleDisconnect, handleDrop, handleGameInfo, handleMoveInfo, handleNextTurn, handlePurchaseMove, handleReady, handleWin, playerId]);
   return { switchReady, handleChoice, handleCard };
 };

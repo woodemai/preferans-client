@@ -2,8 +2,6 @@ import { IGame } from "@/entities/game";
 import { BASE_URL } from "@/shared/lib/api";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const token = localStorage.getItem("token");
-
 export const gameApi = createApi({
   reducerPath: "gameApi",
   baseQuery: fetchBaseQuery({ baseUrl: `${BASE_URL}/game` }),
@@ -16,26 +14,29 @@ export const gameApi = createApi({
         credentials: "include",
         params: { playerId },
         method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       }),
       invalidatesTags: ["Games"],
     }),
-      getGame: build.query<IGame, string>({
+    getGame: build.query<IGame, string>({
       query: (gameId) => ({
         url: "/one",
         params: { gameId },
         credentials: "include",
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       }),
       providesTags: () => ["Game"],
     }),
-    getAllGames: build.query<IGame[], void>({
-      query: () => ({
-        url: "/all",
-        credentials: "include",
-        headers: { Authorization: `Bearer ${token}` },
-      }),
-      providesTags: () => ["Games"],
-    }),
+    getAllGames: build.query<IGame[], { pageNumber: number; pageSize: number }>(
+      {
+        query: ({ pageNumber, pageSize }) => ({
+          url: "/all",
+          credentials: "include",
+          params: { pageNumber, pageSize },
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }),
+        providesTags: () => ["Games"],
+      }
+    ),
   }),
 });

@@ -5,7 +5,7 @@ import { useAppSelector } from "@/shared/store/hooks"
 export const ScoreTable = () => {
     const { players } = useAppSelector(state => state.gameReducer)
     return (
-        <Table className="bg-card rounded-md shadow-md relative top-0 left-0 max-w-sm">
+        <Table className="bg-card rounded-md shadow-md max-w-sm">
             <TableCaption>Таблица взяток</TableCaption>
             <TableHeader>
                 <TableRow>

@@ -13,7 +13,7 @@ const DisconnectButton = () => {
     }
 
     return (
-        <Button variant={'ghost'} onClick={handleDisconnect}>Disconnect</Button>
+        <Button variant={'ghost'} onClick={handleDisconnect}>Отключиться</Button>
     )
 }
 

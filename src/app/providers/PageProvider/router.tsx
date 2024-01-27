@@ -1,38 +1,31 @@
 import { createBrowserRouter } from "react-router-dom";
 import RootLayout from "./RootLayout";
-import HomePage from "@/pages/home/HomePage";
-import AuthPage from "@/pages/auth";
-import Spinner from "@/shared/components/ui/spinner";
-import GamePage from "@/pages/game/GamePage";
-import Page from "@/pages/unauth/Page";
-import ProfilePage from "@/pages/profile/ProfilePage";
+import { AuthPage, Unauth, HomePage, ProfilePage, GamePage } from "@/pages";
 
 const router = createBrowserRouter([
     {
         element: <AuthPage/>,
         path: "/auth",
-        loader: () => <Spinner/>
     },
     {
-        element: <Page/>,
-        path: '/unauth'
+        element: <Unauth/>,
+        path: '/unauth',
     },
     {
         element: <RootLayout />,
         children: [
             {
                 path: "/",
-                element: <HomePage />,
-                loader: () => <Spinner/>
+                element: <HomePage/>,
             },
             {
                 path: '/profile',
                 element: <ProfilePage/>,
-                loader: () => <Spinner/>
             },
             {
                 path: `/game/:id`,
                 element: <GamePage/>,
+
             }
         ]
     }

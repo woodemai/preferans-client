@@ -36,10 +36,14 @@ export const gameSlice = createSlice({
       state.isLoading = true;
     },
     handleWin(state, { payload }: { payload: string }) {
-      for(const player of state.players) {
-        if(player.id === payload) {
-          player.cards = player.cards.concat(state.game.purchase)
-          state.game.purchase = []
+      let i = 0;
+      for (const player of state.players) {
+        if (player.id === payload) {
+          player.cards = player.cards.concat(state.game.purchase);
+
+          state.game.purchase = [];
+          state.game.currentPlayerIndex = (i + 2) % 3;
+          i++;
         }
       }
     },
@@ -59,6 +63,8 @@ export const gameSlice = createSlice({
     },
     handlePurchaseMove(state) {
       const card = state.game.purchase.pop();
+      console.log(card);
+
       if (card) {
         state.game.tableDeck.push(card);
         state.game.bribeWinnerCard = card;
@@ -81,6 +87,7 @@ export const gameSlice = createSlice({
     },
     handleChangeState(state, { payload }: { payload: GameState }) {
       state.game.state = payload;
+      state.isLoading = false;
     },
     handleReady(state, { payload }: { payload: string }) {
       for (const player of state.players) {
@@ -88,6 +95,23 @@ export const gameSlice = createSlice({
           player.ready = !player.ready;
         }
       }
+    },
+    handleDrop(state, { payload }: { payload: MoveInfo }) {
+      state.players = state.players.map((player) => {
+
+        if (player.id === payload.playerId) {
+          console.log(payload.card);
+          
+          player.cards = player.cards.filter(
+            (card) => (card.rank !== payload.card.rank || card.suit !== payload.card.suit)
+          );
+          if (player.cards.length === 10) {
+            state.isLoading = true;
+          }
+        }
+        
+        return player;
+      });
     },
   },
   extraReducers: (builder) => {

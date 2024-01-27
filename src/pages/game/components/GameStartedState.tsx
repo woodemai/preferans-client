@@ -20,6 +20,7 @@ interface Props {
     tableCards: ICard[]
     handleChoice: (choice: IBet) => void
     handleCard: (card: ICard) => void
+
 }
 
 const GameStartedState: FC<Props> = ({
@@ -29,7 +30,7 @@ const GameStartedState: FC<Props> = ({
     purchaseCards,
     tableCards,
     handleChoice,
-    handleCard
+    handleCard,
 }) => {
 
     const { currentUser, leftRival, rightRival } = useGetUserRivals(userId, players);
@@ -39,7 +40,7 @@ const GameStartedState: FC<Props> = ({
 
     useEffect(() => {
         setTurnToBet(state === GameState.TRADING && isTurn)
-        setTurnToMove(state ===GameState.GAMEPLAY && isTurn)
+        setTurnToMove((state ===GameState.GAMEPLAY || state === GameState.DROPPING) && isTurn)
     }, [isTurn, state])
 
     if (state !== GameState.CREATED && currentUser && leftRival && rightRival) {
@@ -53,7 +54,6 @@ const GameStartedState: FC<Props> = ({
                 <TableCards cards={tableCards} />
                 <ScoreTable/>
                 {turnToBet && <TradingScreen handleChoice={handleChoice} />}
-                {turnToMove && "Ваш ход"}
             </div>
         )
     }

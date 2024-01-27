@@ -11,7 +11,7 @@ interface Props {
 
 }
 
-const Card: FC<Props> = ({ rank, suit, interactive = true, active =true }) => {
+export const Card: FC<Props> = ({ rank, suit, interactive = true, active =true }) => {
 
     const resolvedSuit = resolveSuit(suit)
     const resolvedRank = resolveRank(rank)
@@ -38,5 +38,3 @@ const Card: FC<Props> = ({ rank, suit, interactive = true, active =true }) => {
         </div>
     )
 }
-
-export default Card;    

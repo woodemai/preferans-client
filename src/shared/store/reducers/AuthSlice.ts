@@ -20,8 +20,11 @@ export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    handleSwitchReady(state){
-      state.user.ready = !state.user.ready
+    handleSwitchReady(state) {
+      state.user.ready = !state.user.ready;
+    },
+    handleDisconnect(state) {
+      state.user.ready = false;
     },
   },
   extraReducers: (builder) => {
@@ -31,9 +34,9 @@ export const authSlice = createSlice({
         (state, { payload }) => {
           state.token = payload.accessToken;
           state.user = payload.user;
-          state.isAuth = true;
           localStorage.setItem("token", payload.accessToken);
           localStorage.setItem("user", JSON.stringify(payload.user));
+          state.isAuth = true;
         }
       )
       .addMatcher(
@@ -41,9 +44,9 @@ export const authSlice = createSlice({
         (state, { payload }) => {
           state.token = payload.accessToken;
           state.user = payload.user;
-          state.isAuth = true;
           localStorage.setItem("token", payload.accessToken);
           localStorage.setItem("user", JSON.stringify(payload.user));
+          state.isAuth = true;
         }
       )
       .addMatcher(authApi.endpoints.logout.matchFulfilled, (state) => {
