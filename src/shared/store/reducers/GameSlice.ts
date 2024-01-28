@@ -63,7 +63,6 @@ export const gameSlice = createSlice({
     },
     handlePurchaseMove(state) {
       const card = state.game.purchase.pop();
-
       if (card) {
         state.game.tableDeck.push(card);
         state.game.bribeWinnerCard = card;

@@ -30,7 +30,6 @@ export const routes: Route[] = [
     },
 ]
 
-
 const router = createBrowserRouter([
     {
         element: <AuthPage />,
@@ -38,6 +37,7 @@ const router = createBrowserRouter([
     },
     {
         element: <Unauth />,
+
         path: '/unauth',
     },
     {
