@@ -21,8 +21,8 @@ export const Card: FC<Props> = ({ rank, suit, interactive = true, active =true }
     }, [suit])
 
     return (
-        <div className={cn("bg-white rounded-lg shadow-md h-[130px] w-[80px] p-2  transition-all duration-100 cursor-default", isSuitRed() && "text-rose-500", interactive && "hover:-translate-y-4 cursor-pointer hover:z-[100]", !active && "bg-gray-200")}>
-            <div className="w-full h-full ring-1 rounded-md ring-gray-300 relative flex justify-center items-center">
+        <div className={cn("bg-card rounded-lg shadow-md h-[130px] w-[80px] p-2  transition-all duration-100 cursor-default", isSuitRed() && "text-rose-500", interactive && "hover:-translate-y-4 cursor-pointer hover:z-[100]", !active && "bg-muted")}>
+            <div className="w-full h-full border rounded-md border-border relative flex justify-center items-center">
                 <div className="absolute top-2 left-2 flex justify-center flex-col items-center leading-4">
                     <div>{resolvedRank}</div>
                     <div>{resolvedSuit}</div>

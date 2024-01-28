@@ -1,10 +1,10 @@
 import { GameCard } from "@/entities/game"
 import Spinner from "@/shared/components/ui/spinner"
 import { gameApi } from "@/shared/store/services/GameService"
+import { CSSTransition, TransitionGroup } from "react-transition-group"
 
 const GameList = () => {
   const { data: games, isLoading, error } = gameApi.useGetAllGamesQuery({ pageNumber: 0, pageSize: 5 }, { pollingInterval: 1000 })
-
   if (error) {
     return <div>Error!</div>
   }
@@ -15,17 +15,22 @@ const GameList = () => {
       </div>
     )
   }
-  if (games?.length < 1) {
-    return (
-      <div className="text-2xl font-bold flex justify-center items-center w-full p-4">
-        No games found
-      </div>
-    )
-  }
+
   return (
-    <div className="flex flex-col w-full gap-y-4">
-      {games.map(game => <GameCard game={game} key={game.id} />)}
-    </div>
+    <>
+      <TransitionGroup className='flex flex-col w-full sm:max-w-sm md:max-w-md gap-y-4'>
+        {games.map(game =>
+          <CSSTransition
+            key={game.id}
+            timeout={500}
+            classNames='page'
+          >
+            <GameCard game={game} />
+          </CSSTransition>
+        )}
+      </TransitionGroup>
+      {games.length === 0 && <h3>No games found</h3>}
+    </>
   )
 }
 

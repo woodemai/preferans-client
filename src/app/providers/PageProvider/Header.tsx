@@ -4,6 +4,7 @@ import { useAppSelector } from "@/shared/store/hooks";
 import { Button } from "@/shared/components/ui/button";
 import { memo, useEffect, useState } from "react";
 import { authApi } from "@/shared/store/services/AuthService";
+import { ModeToggle } from "../ThemeProvider/ModeToggle";
 interface Link {
     label: string,
     link: string
@@ -25,20 +26,24 @@ const Header = memo(() => {
         if (!isAuth) {
             setLinks([...initialLinks, { label: 'Войти', link: '/auth' }])
         } else {
-            setLinks([...initialLinks, {label: 'Профиль', link: '/profile'}])
+            setLinks([...initialLinks, { label: 'Профиль', link: '/profile' }])
         }
     }, [isAuth])
-    
+
     return (
         <header className="bg-card shadow-sm flex justify-between items-center p-4 border-b w-full">
             <div className="flex flex-row gap-4">
                 <Logo />
                 <h1 className="text-3xl font-bold">Преферанс</h1>
             </div>
-            <nav >
-                {links.map(link => <NavItem key={link.label} link={link.link} label={link.label} />)}
-                {isAuth && <Button onClick={() => handleLogout()} variant={'link'}>Выйти</Button>}
-            </nav>
+            <div className="flex">
+                <ModeToggle />
+                <nav >
+                    {links.map(link => <NavItem key={link.label} link={link.link} label={link.label} />)}
+                    {isAuth && <Button onClick={() => handleLogout()} variant={'link'}>Выйти</Button>}
+                </nav>
+            </div>
+
         </header>
     )
 })
