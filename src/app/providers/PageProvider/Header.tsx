@@ -38,12 +38,11 @@ const Header = memo(() => {
             </div>
             <div className="flex">
                 <ModeToggle />
-                <nav >
+                <nav>
                     {links.map(link => <NavItem key={link.label} link={link.link} label={link.label} />)}
                     {isAuth && <Button onClick={() => handleLogout()} variant={'link'}>Выйти</Button>}
                 </nav>
             </div>
-
         </header>
     )
 })
