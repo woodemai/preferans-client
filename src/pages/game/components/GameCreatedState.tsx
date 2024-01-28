@@ -21,7 +21,7 @@ const GameCreatedState: FC<Props> = memo(({
 
     if (state == GameState.CREATED) {
         return (
-            <div className="flex flex-col w-full sm:max-w-xl gap-y-4 mt-4">
+            <div className="mx-auto w-full sm:max-w-lg flex flex-col gap-y-4 mt-4">
                 <GameHeading />
                 <PlayersList />
                 <ReadyButton isLoading={isLoading} ready={isReady} switchReady={switchReady} />

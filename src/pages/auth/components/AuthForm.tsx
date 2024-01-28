@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { AuthFormState } from "./AuthFormState"
 import AuthFormHeading from "./AuthFormHeading";
 import AuthFormFooter from "./AuthFormFooter";
@@ -11,12 +11,16 @@ import { Input } from "@/shared/components/ui/input";
 import AuthFormButton from "./AuthFormButton";
 import { authApi } from "@/shared/store/services/AuthService";
 import { IUser } from "@/entities/user";
+import { useToast } from "@/shared/components/ui/use-toast";
+import { useAppSelector } from "@/shared/store/hooks";
 
 
 const AuthForm = () => {
     const [formState, setFormState] = useState(AuthFormState.LOGIN);
     const [register] = authApi.useRegisterMutation()
-    const [login, {isLoading}] = authApi.useLoginMutation()
+    const [login, { isLoading }] = authApi.useLoginMutation()
+    const { error } = useAppSelector(state => state.authReducer)
+    const { toast } = useToast()
 
     const handleFormState = () => {
         if (formState === AuthFormState.LOGIN) {
@@ -34,15 +38,34 @@ const AuthForm = () => {
             name: "",
         }
     })
+    useEffect(() => {
+        if (error === 409) {
+            toast({
+                variant: 'destructive',
+                title: 'Ошибка',
+                description: 'Аккаунт с такими email уже существует',
+                duration: 2500
+            })
+        } else if (error === 404) {
+            toast({
+                variant: 'destructive',
+                title: 'Ошибка',
+                description: 'Аккаунт с таким email не найден',
+                duration: 2500
+            })
+        }
+    }, [error, toast])
 
-    const onSubmit = (values: z.infer<typeof formSchema>) => {
+
+
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
         if (formState === AuthFormState.LOGIN) {
-            login({ email: values.email, password: values.password })
+            await login({ email: values.email, password: values.password })
         } else {
-            register({ ...values } as IUser)
+            await register({ ...values } as IUser)
         }
     }
- 
+
     return (
         <div className="bg-card shadow-md rounded-md p-4 w-full md:max-w-xl">
             <AuthFormHeading formState={formState} />

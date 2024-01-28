@@ -40,21 +40,21 @@ const GameStartedState: FC<Props> = ({
 
     useEffect(() => {
         setTurnToBet(state === GameState.TRADING && isTurn)
-        setTurnToMove((state ===GameState.GAMEPLAY || state === GameState.DROPPING) && isTurn)
+        setTurnToMove((state === GameState.GAMEPLAY || state === GameState.DROPPING) && isTurn)
     }, [isTurn, state])
 
     if (state !== GameState.CREATED && currentUser && leftRival && rightRival) {
 
         return (
-            <div className="w-full mt-20">
+            <>
                 <MyCards handleCard={handleCard} interactive={turnToMove} active={turnToMove} cards={currentUser.cards} />
                 <RivalCards type="left" cards={leftRival.cards} />
                 <RivalCards type="right" cards={rightRival.cards} />
                 <PurchaseCards cards={purchaseCards} />
                 <TableCards cards={tableCards} />
-                <ScoreTable/>
-                {turnToBet && <TradingScreen handleChoice={handleChoice} />}
-            </div>
+                {/* <ScoreTable/> */}
+                <TradingScreen show={turnToBet} handleChoice={handleChoice} />
+            </>
         )
     }
 }

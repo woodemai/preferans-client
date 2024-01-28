@@ -34,6 +34,7 @@ export const authSlice = createSlice({
         (state, { payload }) => {
           state.token = payload.accessToken;
           state.user = payload.user;
+          state.error = undefined;
           localStorage.setItem("token", payload.accessToken);
           localStorage.setItem("user", JSON.stringify(payload.user));
           state.isAuth = true;
@@ -44,6 +45,7 @@ export const authSlice = createSlice({
         (state, { payload }) => {
           state.token = payload.accessToken;
           state.user = payload.user;
+          state.error = undefined;
           localStorage.setItem("token", payload.accessToken);
           localStorage.setItem("user", JSON.stringify(payload.user));
           state.isAuth = true;
@@ -53,6 +55,7 @@ export const authSlice = createSlice({
         state.token = "";
         state.user = {} as IUser;
         state.isAuth = false;
+        state.error = undefined;
         localStorage.removeItem("token");
         localStorage.removeItem("user");
       })
@@ -62,6 +65,7 @@ export const authSlice = createSlice({
           state.isLoading = false;
           state.token = payload.accessToken;
           state.user = payload.user;
+          state.error = undefined;
           state.isAuth = true;
           localStorage.setItem("token", payload.accessToken);
           localStorage.setItem("user", JSON.stringify(payload.user));
@@ -71,10 +75,24 @@ export const authSlice = createSlice({
         state.isLoading = true;
       })
       .addMatcher(
-        authApi.endpoints.refresh.matchRejected,
+        authApi.endpoints.login.matchRejected,
         (state, { payload }) => {
           state.isLoading = false;
           state.error = payload?.status;
+        }
+      )
+      .addMatcher(
+        authApi.endpoints.register.matchRejected,
+        (state, { payload }) => {
+          state.isLoading = false;
+          state.error = payload?.status;
+        }
+      )
+      .addMatcher(
+        authApi.endpoints.refresh.matchRejected,
+        (state) => {
+          state.isLoading = false;
+          state.error = "REJECTED";
           state.isAuth = false;
           state.token = "";
           state.user = {} as IUser;

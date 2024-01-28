@@ -1,6 +1,5 @@
 import { Card, ICard } from "@/entities/card";
 import { resolveSuitValue } from "@/shared/helpers/resolveSuitValue";
-import { cn } from "@/shared/lib/utils";
 import { useAppSelector } from "@/shared/store/hooks";
 import { FC, useCallback, useEffect, useState } from "react";
 
@@ -12,7 +11,7 @@ interface Props {
 
 }
 
-const MyCards: FC<Props> = ({ cards:initialCards, interactive = false, active = false, handleCard }) => {
+const MyCards: FC<Props> = ({ cards: initialCards, interactive = false, active = false, handleCard }) => {
 
     const { bribeWinnerCard } = useAppSelector(state => state.gameReducer.game)
     const [hasSuit, setHasSuit] = useState(false)
@@ -68,14 +67,12 @@ const MyCards: FC<Props> = ({ cards:initialCards, interactive = false, active = 
     }
 
     return (
-        <div className="absolute bottom-0 left-[50%] translate-x-[-50%] mb-4">
-            <div className="relative w-[30rem] min-h-[130px] transition-all duration-300">
-                {cards.map((card, i) => (
-                    <button onClick={() => handleClick(card)} className={cn("absolute")}
-                        style={{ marginLeft: `${i * 500 * 1/cards.length}px`, zIndex: i }}
-                        key={card.id}><Card interactive={handleInteractive(card)} active={handleActive(card)} suit={card.suit} rank={card.rank} /></button>
-                ))}
-            </div>
+        <div className="absolute bottom-0 left-[50%] flex transition-all duration-300 translate-x-[-50%] mb-4">
+            {cards.map((card, i) => (
+                <button onClick={() => handleClick(card)}
+                    style={{ zIndex: i }} className="-ml-[30px]"
+                    key={card.id}><Card interactive={handleInteractive(card)} active={handleActive(card)} suit={card.suit} rank={card.rank} /></button>
+            ))}
         </div>
     )
 }
