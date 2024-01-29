@@ -7,7 +7,7 @@ export const useTurn = () => {
   const [isTurn, setIsTurn] = useState(false);
 
   useEffect(() => {    
-    if(players.length === 3) {  
+    if(players.length === 3) {
       setIsTurn(players[game.currentPlayerIndex].id === user.id);
     }
   }, [game.currentPlayerIndex, players, user.id]);

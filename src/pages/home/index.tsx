@@ -1,6 +1,7 @@
 import CreateGameButton from "@/features/button/CreateGameButton";
 import GameList from "@/widgets/GameList";
 
+
 export const HomePage = () => {
     
 

@@ -1,16 +1,16 @@
-import { Toaster } from "@/shared/components/ui/toaster";
-import { Outlet } from "react-router";
 import Header from "./Header";
 import { SwitchTransition, CSSTransition } from 'react-transition-group'
 import { useAuth } from "@/shared/hooks/useAuth";
 import { useLocation, useOutlet } from "react-router-dom";
 import { routes } from "./router";
+import { LegacyRef } from "react";
 
 export default function RootLayout() {
     const location = useLocation()
     const outlet = useOutlet()
-    const { nodeRef } = routes.find(route => route.path === location.pathname) ?? {}
+    const nodeRef = routes.find(route => route.path === location.pathname)?.nodeRef ?? null
     useAuth();
+
 
     return (
         <main className="w-full h-screen">
@@ -23,7 +23,7 @@ export default function RootLayout() {
                     classNames={'page'}
                     unmountOnExit
                 >
-                    <div ref={nodeRef}>
+                    <div ref={nodeRef as LegacyRef<HTMLDivElement>}>
                         {outlet}
                     </div>
                 </CSSTransition>

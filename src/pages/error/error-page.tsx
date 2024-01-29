@@ -1,9 +1,10 @@
 import { Button } from "@/shared/components/ui/button";
 import { Link, useRouteError } from "react-router-dom";
 
-const ErrorPage = () => {
-    const error = useRouteError();
 
+
+const ErrorPage = () => {
+    const error = useRouteError() as { statusText?: string, message: string };
 
     return (
         <div className="flex justify-center items-center flex-col gap-4 h-screen">

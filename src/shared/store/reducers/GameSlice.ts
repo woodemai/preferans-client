@@ -42,9 +42,9 @@ export const gameSlice = createSlice({
           player.cards = player.cards.concat(state.game.purchase);
 
           state.game.purchase = [];
-          state.game.currentPlayerIndex = (i + 2) % 3;
-          i++;
+          state.game.currentPlayerIndex = i
         }
+        i++
       }
     },
     handleMoveInfo(state, { payload }: { payload: MoveInfo }) {

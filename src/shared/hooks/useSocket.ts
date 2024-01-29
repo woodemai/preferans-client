@@ -2,10 +2,10 @@ import { useCallback, useEffect, useState } from "react";
 import { Socket, io } from "socket.io-client";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { gameSlice } from "../store/reducers/GameSlice";
-import { IBet } from "../helpers/getTradingChoices";
 import { authSlice } from "../store/reducers/AuthSlice";
 import { ICard } from "@/entities/card";
 import { GameState, GameInfo, MoveInfo } from "@/entities/game";
+import { IBet } from "@/entities/bet";
 
 const BASE_URL = "http://localhost:8086";
 
@@ -38,13 +38,17 @@ export const useSocket = (gameId: string, playerId: string) => {
     }
   }, [dispatch, handleSwitchReady, socket]);
 
-  const handleChoice = useCallback(
-    (choice: IBet) => {
+  const handleBet = useCallback(
+    (bet: IBet) => {
       if (socket) {
-        socket.emit("send_bet", choice);
+        if (game.state === GameState.REBET) {
+          socket.emit("send_rebet", bet)
+        } else {
+          socket.emit("send_bet", bet);
+        }
       }
     },
-    [socket]
+    [game.state, socket]
   );
 
   const handleCard = useCallback(
@@ -83,8 +87,8 @@ export const useSocket = (gameId: string, playerId: string) => {
       dispatch(handleMoveInfo(info));
       dispatch(handleNextTurn());
     });
-    s.on("drop", (playerId:string, card:ICard) => {
-      dispatch(handleDrop({playerId, card}));
+    s.on("drop", (playerId: string, card: ICard) => {
+      dispatch(handleDrop({ playerId, card }));
     });
     s.on("bribe_end", (winnerId: string) => {
       dispatch(handleBribeEnd(winnerId));
@@ -104,6 +108,21 @@ export const useSocket = (gameId: string, playerId: string) => {
       s.disconnect();
       dispatch(handleDisconnect());
     };
-  }, [dispatch, gameId, handleAllReady, handleBribeEnd, handleChangeState, handleDisconnect, handleDrop, handleGameInfo, handleMoveInfo, handleNextTurn, handlePurchaseMove, handleReady, handleWin, playerId]);
-  return { switchReady, handleChoice, handleCard };
+  }, [
+    dispatch,
+    gameId,
+    handleAllReady,
+    handleBribeEnd,
+    handleChangeState,
+    handleDisconnect,
+    handleDrop,
+    handleGameInfo,
+    handleMoveInfo,
+    handleNextTurn,
+    handlePurchaseMove,
+    handleReady,
+    handleWin,
+    playerId,
+  ]);
+  return { switchReady, handleChoice: handleBet, handleCard };
 };

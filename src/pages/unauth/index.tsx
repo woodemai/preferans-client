@@ -2,6 +2,8 @@ import { Button } from "@/shared/components/ui/button";
 import { AlertTriangle } from "lucide-react";
 import { Link } from "react-router-dom";
 
+
+
 export const Unauth = () => {
 
     return (

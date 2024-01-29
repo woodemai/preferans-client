@@ -1,8 +1,10 @@
 import { useAppSelector } from "@/shared/store/hooks"
-import AuthForm from "./components/AuthForm"
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { lazy, useEffect } from "react";
 import Logo from "@/shared/components/Logo";
+const AuthForm = lazy(() => import("./components/AuthForm")) 
+
+
 
 export const AuthPage = () => {
   const { isAuth } = useAppSelector(state => state.authReducer);
@@ -23,3 +25,4 @@ export const AuthPage = () => {
     </div>
   )
 }
+export default AuthPage;
