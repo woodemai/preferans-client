@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import RootLayout from "./RootLayout";
 import { AuthPage, Unauth, HomePage, ProfilePage, GamePage } from "@/pages";
 import { Ref, createRef } from "react";
+import ErrorPage from "@/pages/error/error-page";
 
 type Route = {
     path: string,
@@ -42,6 +43,7 @@ const router = createBrowserRouter([
     },
     {
         element: <RootLayout />,
+        errorElement: <ErrorPage/>,
         children: routes.map(route => ({
             index: route.path === '/',
             path: route.path === '/' ? undefined : route.path,
