@@ -1,11 +1,11 @@
 import { useParams } from "react-router-dom"
 import { useAppSelector } from "@/shared/store/hooks"
 import { useSocket } from "@/shared/hooks/useSocket"
+import { Suspense, lazy } from "react"
 const GameCreatedState = lazy(() => import("./components/GameCreatedState"))
 const GameStartedState = lazy(() => import("./components/GameStartedState"))
 import GameErrorState from "./components/GameErrorState"
 import GameLoadingState from "./components/GameLoadingState"
-import { Suspense, lazy } from "react"
 
 
 

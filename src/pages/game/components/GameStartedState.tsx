@@ -46,13 +46,12 @@ const GameStartedState: FC<Props> = ({
 
         return (
             <>
-                <MyCards handleCard={handleCard} interactive={turnToMove} active={turnToMove} cards={currentUser.cards} />
-                <RivalCards type="left" cards={leftRival.cards} />
-                <RivalCards type="right" cards={rightRival.cards} />
+                <MyCards score={currentUser.score} name={currentUser.name} bet={currentUser.bet} handleCard={handleCard} interactive={turnToMove} active={turnToMove} cards={currentUser.cards} />
+                <RivalCards score={leftRival.score} name={leftRival.name} type="left" bet={leftRival.bet} cards={leftRival.cards} />
+                <RivalCards score={rightRival.score} name={rightRival.name} type="right" bet={rightRival.bet} cards={rightRival.cards} />
                 <PurchaseCards cards={purchaseCards} />
                 <TableCards cards={tableCards} />
-                {/* <ScoreTable/> */}
-                <TradingScreen show={turnToBet} handleChoice={handleChoice} />
+                <TradingScreen bet={currentUser.bet} show={turnToBet} handleChoice={handleChoice} />
             </>
         )
     }

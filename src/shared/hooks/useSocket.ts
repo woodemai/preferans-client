@@ -25,6 +25,7 @@ export const useSocket = (gameId: string, playerId: string) => {
     handleReady,
     handleWin,
     handleDrop,
+    handleBetInfo,
   } = gameSlice.actions;
 
   const { handleSwitchReady, handleDisconnect } = authSlice.actions;
@@ -90,6 +91,9 @@ export const useSocket = (gameId: string, playerId: string) => {
     s.on("drop", (playerId: string, card: ICard) => {
       dispatch(handleDrop({ playerId, card }));
     });
+    s.on("bet", (playerId: string, bet: IBet) => {
+      dispatch(handleBetInfo({ playerId, bet }));
+    });
     s.on("bribe_end", (winnerId: string) => {
       dispatch(handleBribeEnd(winnerId));
       dispatch(handlePurchaseMove());
@@ -108,21 +112,6 @@ export const useSocket = (gameId: string, playerId: string) => {
       s.disconnect();
       dispatch(handleDisconnect());
     };
-  }, [
-    dispatch,
-    gameId,
-    handleAllReady,
-    handleBribeEnd,
-    handleChangeState,
-    handleDisconnect,
-    handleDrop,
-    handleGameInfo,
-    handleMoveInfo,
-    handleNextTurn,
-    handlePurchaseMove,
-    handleReady,
-    handleWin,
-    playerId,
-  ]);
+  }, [dispatch, gameId, handleAllReady, handleBetInfo, handleBribeEnd, handleChangeState, handleDisconnect, handleDrop, handleGameInfo, handleMoveInfo, handleNextTurn, handlePurchaseMove, handleReady, handleWin, playerId]);
   return { switchReady, handleChoice: handleBet, handleCard };
 };
