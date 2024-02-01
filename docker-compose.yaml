@@ -1,5 +1,11 @@
 version: "2"
 services:
+  server:
+      build: 
+        context: ../preferans-server
+        dockerfile: Dockerfile
+      ports:
+        - 8080:8080
   nginx-react:
     container_name: ngixreactapp
     build:
