@@ -2,8 +2,8 @@
 FROM node:20-alpine AS build
 WORKDIR /app
 COPY . .
-ENV VITE_API_BASE_URL http://77.105.174:8080/api/v1
-ENV VITE_SOCKET_BASE_URL http://77.105.174:8086
+ENV VITE_API_BASE_URL http://5.35.11.110:8080/api/v1
+ENV VITE_SOCKET_BASE_URL http://5.35.11.110:8086
 RUN npm install
 RUN npm run build
 
