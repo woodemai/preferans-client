@@ -19,3 +19,4 @@ export const Unauth = () => {
         </div>
     )
 }
+export default Unauth
