@@ -2,7 +2,8 @@ import { Button } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
 import { useAppSelector } from "@/shared/store/hooks";
 import { authApi } from "@/shared/store/services/AuthService";
-import { useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
+
 
 export const ProfilePage = () => {
 
@@ -48,3 +49,5 @@ export const ProfilePage = () => {
     )
 }
 
+
+export default ProfilePage

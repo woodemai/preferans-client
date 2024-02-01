@@ -4,6 +4,7 @@ import { gameApi } from "../services/GameService";
 import { IUser } from "@/entities/user";
 import { GameInfo } from "@/entities/game/GameInfo";
 import { MoveInfo } from "@/entities/game/MoveInfo";
+import { IBet } from "@/entities/bet";
 
 type GameSliceState = {
   isLoading: boolean;
@@ -12,6 +13,11 @@ type GameSliceState = {
   game: IGame;
   players: IUser[];
 };
+
+interface BetInfo {
+  playerId: string;
+  bet: IBet;
+}
 const initialState: GameSliceState = {
   isLoading: false,
   error: undefined,
@@ -26,6 +32,13 @@ export const gameSlice = createSlice({
   reducers: {
     handleConnect(state, { payload }) {
       state.game = payload.game;
+    },
+    handleBetInfo(state, { payload }: { payload: BetInfo }) {
+      for (const player of state.players) {
+        if (player.id === payload.playerId) {
+          player.bet = payload.bet;
+        }
+      }
     },
     handleGameInfo(state, { payload }: { payload: GameInfo }) {
       state.isLoading = false;
@@ -42,9 +55,9 @@ export const gameSlice = createSlice({
           player.cards = player.cards.concat(state.game.purchase);
 
           state.game.purchase = [];
-          state.game.currentPlayerIndex = (i + 2) % 3;
-          i++;
+          state.game.currentPlayerIndex = i;
         }
+        i++;
       }
     },
     handleMoveInfo(state, { payload }: { payload: MoveInfo }) {
@@ -96,18 +109,18 @@ export const gameSlice = createSlice({
     },
     handleDrop(state, { payload }: { payload: MoveInfo }) {
       state.players = state.players.map((player) => {
-
         if (player.id === payload.playerId) {
           console.log(payload.card);
-          
+
           player.cards = player.cards.filter(
-            (card) => (card.rank !== payload.card.rank || card.suit !== payload.card.suit)
+            (card) =>
+              card.rank !== payload.card.rank || card.suit !== payload.card.suit
           );
           if (player.cards.length === 10) {
             state.isLoading = true;
           }
         }
-        
+
         return player;
       });
     },

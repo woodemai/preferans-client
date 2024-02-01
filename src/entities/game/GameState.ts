@@ -3,5 +3,6 @@ export enum GameState {
     TRADING = 'TRADING',
     ENDED = 'ENDED',
     GAMEPLAY = 'GAMEPLAY',
-    DROPPING = 'DROPPING'
+    DROPPING = 'DROPPING',
+    REBET = 'REBET',
 }

@@ -6,10 +6,11 @@ const choices = getChoices()
 interface Props {
     handleChoice: (choice: IBet) => void,
     show: boolean
+    bet?: IBet
 }
 
 
-const TradingScreen = ({ handleChoice, show }: Props) => {
+const TradingScreen = ({ handleChoice, show, bet }: Props) => {
 
 
     const handleClick = (bet: IBet) => {
@@ -22,11 +23,11 @@ const TradingScreen = ({ handleChoice, show }: Props) => {
                 <h1 className="font-bold tracking-tight text-xl mb-2">Trading</h1>
                 <div className="rounded-sm">
                     <div className="grid grid-cols-5 grid-rows-5">
-                        {choices.map((choice, i) => <TradingScreenItem onClick={() => handleClick(choice)} choice={choice} key={i} />)}
+                        {choices.map((choice, i) => <TradingScreenItem userBet={bet} onClick={() => handleClick(choice)} bet={choice} key={i} />)}
                     </div>
                     <div className="flex justify-evenly w-full">
-                        <TradingScreenItem onClick={() => handleClick({ type: BetType.MIZER })} choice={{ type: BetType.MIZER }} />
-                        <TradingScreenItem onClick={() => handleClick({ type: BetType.PASS })} choice={{ type: BetType.PASS }} />
+                        <TradingScreenItem userBet={bet}  onClick={() => handleClick({ type: BetType.MIZER })} bet={{ type: BetType.MIZER }} />
+                        <TradingScreenItem userBet={bet} onClick={() => handleClick({ type: BetType.PASS })} bet={{ type: BetType.PASS }} />
                     </div>
                 </div>
             </div>

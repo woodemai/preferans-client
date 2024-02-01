@@ -6,7 +6,7 @@ import { CSSTransition, TransitionGroup } from "react-transition-group"
 const GameList = () => {
   const { data: games, isLoading, error } = gameApi.useGetAllGamesQuery({ pageNumber: 0, pageSize: 5 }, { pollingInterval: 1000 })
   if (error) {
-    return <div>Error!</div>
+    return <h2>Error!</h2>
   }
   if (isLoading || !games) {
     return (
@@ -29,7 +29,7 @@ const GameList = () => {
           </CSSTransition>
         )}
       </TransitionGroup>
-      {games.length === 0 && <h3>No games found</h3>}
+      {games.length === 0 && <h2>No games found</h2>}
     </>
   )
 }

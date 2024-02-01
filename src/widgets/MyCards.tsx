@@ -1,17 +1,22 @@
+import { IBet } from "@/entities/bet";
 import { Card, ICard } from "@/entities/card";
+import PlayerInfo from "@/features/PlayerInfo";
 import { resolveSuitValue } from "@/shared/helpers/resolveSuitValue";
 import { useAppSelector } from "@/shared/store/hooks";
 import { FC, useCallback, useEffect, useState } from "react";
 
 interface Props {
     cards: ICard[],
+    bet?: IBet
+    name: string,
+    score: number,
     interactive?: boolean,
     active?: boolean
     handleCard: (card: ICard) => void
 
 }
 
-const MyCards: FC<Props> = ({ cards: initialCards, interactive = false, active = false, handleCard }) => {
+const MyCards: FC<Props> = ({ cards: initialCards, interactive = false, active = false, handleCard, bet, name, score }) => {
 
     const { bribeWinnerCard } = useAppSelector(state => state.gameReducer.game)
     const [hasSuit, setHasSuit] = useState(false)
@@ -67,12 +72,15 @@ const MyCards: FC<Props> = ({ cards: initialCards, interactive = false, active =
     }
 
     return (
-        <div className="absolute bottom-0 left-[50%] flex transition-all duration-300 translate-x-[-50%] mb-4">
-            {cards.map((card, i) => (
-                <button onClick={() => handleClick(card)}
-                    style={{ zIndex: i }} className="-ml-[30px]"
-                    key={card.id}><Card interactive={handleInteractive(card)} active={handleActive(card)} suit={card.suit} rank={card.rank} /></button>
-            ))}
+        <div className="absolute bottom-0 left-[50%] flex flex-col gap-4 justify-center items-center transition-all duration-300 translate-x-[-50%] mb-4">
+            <PlayerInfo name={name} score={score} bet={bet} />
+            <div className="flex">
+                {cards.map((card, i) =>
+                    <button onClick={() => handleClick(card)}
+                        style={{ zIndex: i }} className="-ml-[30px]"
+                        key={card.id}><Card interactive={handleInteractive(card)} active={handleActive(card)} suit={card.suit} rank={card.rank} /></button>
+                )}
+            </div>
         </div>
     )
 }

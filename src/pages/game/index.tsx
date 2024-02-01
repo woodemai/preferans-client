@@ -1,11 +1,11 @@
 import { useParams } from "react-router-dom"
 import { useAppSelector } from "@/shared/store/hooks"
 import { useSocket } from "@/shared/hooks/useSocket"
-import GameCreatedState from "./components/GameCreatedState"
-import GameStartedState from "./components/GameStartedState"
+import { Suspense, lazy } from "react"
+const GameCreatedState = lazy(() => import("./components/GameCreatedState"))
+const GameStartedState = lazy(() => import("./components/GameStartedState"))
 import GameErrorState from "./components/GameErrorState"
 import GameLoadingState from "./components/GameLoadingState"
-
 
 
 
@@ -22,9 +22,11 @@ export const GamePage = () => {
         <>
             <GameLoadingState isLoading={isLoading} />
             <GameErrorState id={id} game={game} />
-            <GameCreatedState state={game.state} isLoading={isLoading} isReady={user.ready} switchReady={switchReady} />
-            <GameStartedState tableCards={game.tableDeck} state={game.state} userId={user.id} players={players} purchaseCards={game.purchase} handleChoice={handleChoice} handleCard={handleCard} />
+            <Suspense>
+                <GameCreatedState state={game.state} isLoading={isLoading} isReady={user.ready} switchReady={switchReady} />
+                <GameStartedState tableCards={game.tableDeck} state={game.state} userId={user.id} players={players} purchaseCards={game.purchase} handleChoice={handleChoice} handleCard={handleCard} />
+            </Suspense>
         </>
     )
 }
-
+export default GamePage
