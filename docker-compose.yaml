@@ -1,17 +1,29 @@
-version: "2"
+version: "3.4"
 services:
-  server:
-      build: 
-        context: ../preferans-server
-        dockerfile: Dockerfile
-      ports:
-        - 8080:8080
-  nginx-react:
-    container_name: ngixreactapp
+  backend:
+    build: 
+      context: ../preferans-server
+      dockerfile: Dockerfile
+    environment:
+      - CLIENT_IP=77.105.174.80
+    ports:
+     - 8080:8080
+  frontend:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - 80:80
+      - 443:443
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
     environment:
       NODE_ENV: production
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    command: certonly --webroot --webroot-path=/var/www/certbot --email n.savchenkoo73@gmail.com --agree-tos --no-eff-email --force-renewal -d woo-preferans.ru
+
