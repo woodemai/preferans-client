@@ -7,7 +7,8 @@ services:
     environment:
       - CLIENT_IP=77.105.174.80
     ports:
-     - 8080:8080
+     - 80:80
+     - 443:443
   frontend:
     build:
       context: .
@@ -16,14 +17,14 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - ./certbot/conf:/etc/letsencrypt
+      - /etc/letsencrypt:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
     environment:
       NODE_ENV: production
   certbot:
     image: certbot/certbot
     volumes:
-      - ./certbot/conf:/etc/letsencrypt
+      -  /etc/letsencrypt:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
-    command: certonly --webroot --webroot-path=/var/www/certbot --email n.savchenkoo73@gmail.com --agree-tos --no-eff-email --force-renewal -d woo-preferans.ru
+    command: certonly --webroot --webroot-path=/var/www/certbot --email n.savchenkoo73@gmail.com --agree-tos --no-eff-email --force-renewal -d woo-preferans.ru -d www.woo-preferans.ru -d woo-preferans.online -d woo-preferans.online 
 
