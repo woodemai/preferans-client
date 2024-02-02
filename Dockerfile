@@ -2,8 +2,8 @@
 FROM node:20-alpine AS build
 WORKDIR /app
 COPY . .
-ENV VITE_API_BASE_URL https://woo.preferans.onine/api/v1
-ENV VITE_SOCKET_BASE_URL http://woo.preferans.online
+ENV VITE_API_BASE_URL https://woo.preferans.onine:8443/api/v1
+ENV VITE_SOCKET_BASE_URL https://woo.preferans.online:8086
 RUN npm install
 RUN npm run build
 

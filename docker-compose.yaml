@@ -5,10 +5,11 @@ services:
       context: ../preferans-server
       dockerfile: Dockerfile
     environment:
-      - CLIENT_IP=77.105.174.80
+      - CLIENT_URL=https:woo-preferans.ru
+      - SPRING_PROFILES_ACTIVE=production
     ports:
-     - 80:80
-     - 443:443
+     - 8086:8086
+     - 8443:8443
   frontend:
     build:
       context: .
@@ -20,7 +21,9 @@ services:
       - /etc/letsencrypt:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
     environment:
-      NODE_ENV: production
+      - NODE_ENV=production
+      - VITE_API_BASE_URL=https://woo.preferans.onine:8443/api/v1
+      - VITE_SOCKET_BASE_URL=https://woo.preferans.online:8086
   certbot:
     image: certbot/certbot
     volumes:
