@@ -14,6 +14,10 @@ const initialLinks: Link[] = [
         label: "Главная",
         link: "/"
     },
+    {
+        label: "Инфо",
+        link: "/info"
+    },
 
 ]
 

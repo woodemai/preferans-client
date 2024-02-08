@@ -4,11 +4,11 @@ import { GameState } from "@/entities/game";
 import { IUser } from "@/entities/user";
 import useGetUserRivals from "@/shared/hooks/useGetUserRivals";
 import { useTurn } from "@/shared/hooks/useTurn";
-import MyCards from "@/widgets/MyCards";
-import PurchaseCards from "@/widgets/PurchaseCards";
-import RivalCards from "@/widgets/RivalCards";
-import TableCards from "@/widgets/TableCards";
-import TradingScreen from "@/widgets/TradingScreen";
+import TradingScreen from "@/widgets/bet/TradingScreen";
+import MyCards from "@/widgets/card/MyCards";
+import PurchaseCards from "@/widgets/card/PurchaseCards";
+import RivalCards from "@/widgets/card/RivalCards";
+import TableCards from "@/widgets/card/TableCards";
 import { FC, useEffect, useState } from "react";
 
 interface Props {

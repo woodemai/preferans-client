@@ -1,5 +1,5 @@
 import { FC } from "react"
-import LoadingButton from "./LoadingButton"
+import LoadingButton from "../user/LoadingButton"
 import { cn } from "@/shared/lib/utils"
 
 interface Props {

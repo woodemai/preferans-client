@@ -1,5 +1,5 @@
 import { IBet, BetType } from "@/entities/bet";
-import { TradingScreenItem } from "@/features/TradingScreenItem";
+import { TradingScreenItem } from "@/features/bet/TradingScreenItem";
 import { getChoices } from "@/shared/helpers/getTradingChoices";
 
 const choices = getChoices()

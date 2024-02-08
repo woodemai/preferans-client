@@ -1,7 +1,7 @@
 import { useAppSelector } from "@/shared/store/hooks"
 import { gameApi } from "@/shared/store/services/GameService";
 import { useNavigate } from "react-router-dom";
-import LoadingButton from "./LoadingButton";
+import LoadingButton from "../user/LoadingButton";
 import { memo, useEffect } from "react";
 
 
