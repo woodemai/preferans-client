@@ -1,7 +1,7 @@
 import { FC, useCallback } from "react";
 import { Rank, Suit } from ".";
 import { cn } from "@/shared/lib/utils";
-import { resolveSuit, resolveRank } from "@/shared/helpers/resolveCard";
+import { resolveSuit, resolveRank } from "./resolveCard";
 
 interface Props {
     rank: Rank,

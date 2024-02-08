@@ -7,7 +7,7 @@ import { ICard } from "@/entities/card";
 import { GameState, GameInfo, MoveInfo } from "@/entities/game";
 import { IBet } from "@/entities/bet";
 
-const BASE_URL = "http://localhost:8086";
+const BASE_URL = import.meta.env.VITE_SOCKET_BASE_URL;
 
 export const useSocket = (gameId: string, playerId: string) => {
   const [socket, setSocket] = useState<undefined | Socket>();

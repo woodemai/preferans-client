@@ -1,9 +1,9 @@
 import { GameState } from "@/entities/game";
-import DisconnectButton from "@/features/button/DisconnectButton";
-import ReadyButton from "@/features/button/ReadyButton";
 import GameHeading from "./GameHeading";
 import PlayersList from "./PlayersList";
 import { FC, memo } from "react";
+import DisconnectButton from "@/features/game/DisconnectButton";
+import ReadyButton from "@/features/game/ReadyButton";
 
 interface Props {
     state: GameState,
